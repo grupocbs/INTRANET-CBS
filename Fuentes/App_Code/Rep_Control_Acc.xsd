@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Rep_Control_Acc" targetNamespace="http://tempuri.org/Rep_Control_Acc.xsd" xmlns:mstns="http://tempuri.org/Rep_Control_Acc.xsd" xmlns="http://tempuri.org/Rep_Control_Acc.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Rep_Control_Acc" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="Rep_Control_Acc" msprop:Generator_UserDSName="Rep_Control_Acc">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Rep_Control_Acc" msprop:Generator_TableClassName="Rep_Control_AccDataTable" msprop:Generator_TableVarName="tableRep_Control_Acc" msprop:Generator_RowChangedName="Rep_Control_AccRowChanged" msprop:Generator_TablePropName="_Rep_Control_Acc" msprop:Generator_RowDeletingName="Rep_Control_AccRowDeleting" msprop:Generator_RowChangingName="Rep_Control_AccRowChanging" msprop:Generator_RowEvHandlerName="Rep_Control_AccRowChangeEventHandler" msprop:Generator_RowDeletedName="Rep_Control_AccRowDeleted" msprop:Generator_RowClassName="Rep_Control_AccRow" msprop:Generator_UserTableName="Rep_Control_Acc" msprop:Generator_RowEvArgName="Rep_Control_AccRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="VEHICULO" msprop:Generator_ColumnVarNameInTable="columnVEHICULO" msprop:Generator_ColumnPropNameInRow="VEHICULO" msprop:Generator_ColumnPropNameInTable="VEHICULOColumn" msprop:Generator_UserColumnName="VEHICULO" type="xs:string" minOccurs="0" />
+              <xs:element name="ASIGNADO" msprop:Generator_ColumnVarNameInTable="columnASIGNADO" msprop:Generator_ColumnPropNameInRow="ASIGNADO" msprop:Generator_ColumnPropNameInTable="ASIGNADOColumn" msprop:Generator_UserColumnName="ASIGNADO" type="xs:string" minOccurs="0" />
+              <xs:element name="INSTALADO" msprop:Generator_ColumnVarNameInTable="columnINSTALADO" msprop:Generator_ColumnPropNameInRow="INSTALADO" msprop:Generator_ColumnPropNameInTable="INSTALADOColumn" msprop:Generator_UserColumnName="INSTALADO" type="xs:string" minOccurs="0" />
+              <xs:element name="NICOP" msprop:Generator_ColumnVarNameInTable="columnNICOP" msprop:Generator_ColumnPropNameInRow="NICOP" msprop:Generator_ColumnPropNameInTable="NICOPColumn" msprop:Generator_UserColumnName="NICOP" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,274 @@
+.dxtlControl_DevEx
+{
+	cursor: default;
+	font: 8pt Verdana;
+	color: #201f35;
+	border: 1px solid #9da0aa;
+	background: White url('CssImages/ControlBack.png') no-repeat right bottom;
+}
+.dxtlControl_DevEx caption
+{
+	font-size: 8pt;
+	font-weight: normal;
+	color: #201f35;
+	text-align: center;
+	padding: 3px 3px 5px;
+	text-align: center;
+	background: #f2f3f4 url('CssImages/TitleBack.png') repeat-x left top;
+	border: 1px solid #cacbd3;
+	border-bottom: 0;
+}
+
+/* Indent cells */
+.dxtlIndent_DevEx,
+.dxtlIndentWithButton_DevEx
+{
+	background: Transparent;
+	vertical-align: top;
+}
+.dxtlIndent_DevEx
+{
+	padding: 0 11px;
+}
+.dxtlIndentWithButton_DevEx
+{
+	padding: 4px 5px;
+}
+.dxtlSelectionCell_DevEx
+{
+	padding: 0 2px;
+	border-width: 0;
+}
+
+/* Tree-lines cells */
+.dxtlLineRoot_DevEx,
+.dxtlLineFirst_DevEx,
+.dxtlLineMiddle_DevEx,
+.dxtlLineLast_DevEx,
+.dxtlLineFirstRtl_DevEx,
+.dxtlLineMiddleRtl_DevEx,
+.dxtlLineLastRtl_DevEx
+{
+    background-color: Transparent;
+}
+
+.dxtlIndent_DevEx,
+.dxtlIndentWithButton_DevEx
+{
+    background-color: Transparent;
+}
+
+/* Headers */
+.dxtlHeader_DevEx
+{
+	background: #f2f3f4 url('CssImages/HeaderBack.png') left top repeat-x;
+	border: 1px solid #cacbd3;
+	padding: 5px 6px;
+	font-weight: normal;
+	color: #201f35;
+}
+.dxtlHeader_DevEx table.dxtl
+{
+	border-collapse: collapse;
+	width: 100%;
+}
+.dxtlHeader_DevEx td.dxtl
+{
+	padding: 0;
+}
+.dxtlHeader_DevEx,
+.dxtlHeader_DevEx td.dxtl
+{	
+	font: 8pt Verdana;
+	white-space: nowrap;
+	text-align: left;
+}
+
+/* Nodes */
+.dxtlNode_DevEx
+{
+	background: Transparent;
+}
+.dxtlAltNode_DevEx td.dxtl,
+.dxtlAltNode_DevEx .dxtlCommandCell_DevEx,
+.dxtlAltNode_DevEx .dxtlSelectionCell_DevEx
+{
+	background: url('CssImages/AltBack.png') left top;
+}
+.dxtlSelectedNode_DevEx td.dxtl,
+.dxtlSelectedNode_DevEx .dxtlCommandCell_DevEx,
+.dxtlSelectedNode_DevEx .dxtlSelectionCell_DevEx
+{
+	background: #eff0f2;
+	color: #201f35;
+}
+.dxtlFocusedNode_DevEx td.dxtl,
+.dxtlFocusedNode_DevEx .dxtlCommandCell_DevEx,
+.dxtlFocusedNode_DevEx .dxtlSelectionCell_DevEx
+{
+	background: #dde6fd url('CssImages/FocusedBack.png') left top repeat-x;
+    color: #201f35;
+}
+.dxtlAltNode_DevEx .dxtlIndent_DevEx,
+.dxtlSelectedNode_DevEx .dxtlIndent_DevEx,
+.dxtlFocusedNode_DevEx .dxtlIndent_DevEx
+{
+    background: Transparent;
+}
+.dxtlInlineEditNode_DevEx
+{
+	background: Transparent;
+}
+.dxtlEditFormDisplayNode_DevEx td.dxtl,
+.dxtlEditFormDisplayNode_DevEx .dxtlCommandCell_DevEx,
+.dxtlEditFormDisplayNode_DevEx .dxtlSelectionCell_DevEx
+{
+	background: #f9f9fc;
+}
+
+.dxtlNode_DevEx td.dxtl,
+.dxtlAltNode_DevEx  td.dxtl,
+.dxtlSelectedNode_DevEx td.dxtl,
+.dxtlFocusedNode_DevEx td.dxtl,
+.dxtlEditFormDisplayNode_DevEx td.dxtl,
+.dxtlCommandCell_DevEx
+{
+	padding: 4px 6px;
+	border-width: 0;
+	white-space: nowrap;
+	font-size: 8pt;
+	font-family: Verdana;
+}
+.dxtlEditFormDisplayNode_DevEx td.dxtl,
+.dxtlEditFormDisplayNode_DevEx td.dxtl__cc
+{
+    border-bottom: 1px solid #d9dae0;
+}
+.dxtlInlineEditNode_DevEx td.dxtl
+{
+	border-width: 0;
+	padding: 1px;
+}
+
+/* Preview */
+.dxtlPreview_DevEx
+{
+	background: url('CssImages/PreviewBack.png') left top;
+	color: #777777;
+	padding: 14px;
+	border-width: 0;
+	font: 8pt Verdana;
+}
+
+/* Footers */
+.dxtlGroupFooter_DevEx td.dxtl,
+.dxtlFooter_DevEx td.dxtl
+{
+    background-color: #f9f9fc;
+	padding: 6px;
+	white-space: nowrap;
+	border: 1px solid #e1e1e9;
+	border-left-width: 0 !important;
+	font: 8pt Verdana;
+}
+
+/* Pagers */
+.dxtlPagerTopPanel_DevEx,
+.dxtlPagerBottomPanel_DevEx
+{
+    background: #f1f2f6 url('CssImages/PagerBack.png') left top;
+}
+.dxtlPagerTopPanel_DevEx
+{
+	border-bottom: 1px solid #cacbd3;
+}
+.dxtlPagerBottomPanel_DevEx
+{
+	border-top: 1px solid #cacbd3;
+}
+
+/* Editing */
+.dxtlEditForm_DevEx
+{
+	background: #f9f9fc;
+	border-width: 0;
+	padding: 8px 10px 10px;
+}
+.dxtlEditFormCaption_DevEx,
+.dxtlEditFormEditCell_DevEx
+{
+	padding: 4px;
+}
+.dxtlEditFormCaption_DevEx
+{
+	padding-left: 10px;
+	white-space: nowrap;
+}
+.dxtlError_DevEx
+{
+	background-color: #ebecef;
+	color: #ba1717;
+	padding: 6px 10px;
+	border-width: 0;
+	font: 8pt Verdana;
+}
+.dxtlPopupEditForm_DevEx
+{
+    padding: 12px;
+}
+
+/* Links */
+.dxtlControl_DevEx a
+{
+	color: #1b3f91;
+	text-decoration: none;
+}
+.dxtlControl_DevEx a:hover
+{
+	text-decoration: underline;
+}
+
+.dxtlSelectedNode_DevEx a,
+.dxtlFocusedNode_DevEx a
+{
+	color: #1b3f91;
+	text-decoration: none;
+}
+.dxtlSelectedNode_DevEx a:hover,
+.dxtlFocusedNode_DevEx a:hover
+{
+	text-decoration: underline;
+}
+.dxtlCommandCell_DevEx a
+{
+	margin-right: 3px;
+}
+
+/* Loading panel */
+.dxtlLoadingPanel_DevEx
+{
+	font: 8pt Verdana;
+    color: #201f35;
+    background: White;
+	border: 1px solid #9da0aa;
+}
+.dxtlLoadingPanel_DevEx td.dx
+{
+	white-space: nowrap;
+	text-align: center;
+	padding: 7px 10px;
+}
+.dxtlLoadingDiv_DevEx
+{
+	background: white;
+	opacity: 0.01;
+	filter: alpha(opacity=1);
+}
+
+/* Disabled */
+.dxtlDisabled_DevEx,
+.dxtlDisabled_DevEx .dxtl
+{
+	color: #b1b1b8;
+	cursor: default;
+}

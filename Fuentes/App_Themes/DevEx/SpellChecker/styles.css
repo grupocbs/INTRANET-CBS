@@ -1,0 +1,109 @@
+/* -- ASPxSpellChecker -- */
+.dxwscLoadingDiv_DevEx
+{
+	background-color: Gray;
+	opacity: 0.01;
+	filter:progid:DXImageTransform.Microsoft.Alpha(Style=0, Opacity=1);
+}
+.dxwscLoadingPanel_DevEx
+{
+	font: 8pt Verdana;
+    color: #201f35;
+    background: White;
+	border: 1px solid #9da0aa;
+}
+.dxwscLoadingPanel_DevEx td.dx
+{
+	white-space: nowrap;
+	text-align: center;
+	padding: 7px 10px;
+}
+
+.dxwscCheckedTextContainer_DevEx
+{
+	background-color: white;
+	font-size: 8pt;
+	font-family: Verdana;
+	border: 1px solid #9da0aa;
+	vertical-align: top;
+	overflow: auto;
+	height: 110px;
+	width: 340px;
+	padding: 5px;
+}
+.dxwscErrorWord_DevEx 
+{
+	background: url('scErrorUnderline.gif') repeat-x left bottom;
+	padding-bottom: 3px;
+	color: #201f35;
+	font-weight: bold;
+}
+
+/*-- Dialog Forms --*/
+.leftBottomButton,
+.rightBottomButton
+{
+    border-top: 1px solid #abacb9;
+}
+.leftBottomButton
+{
+    padding: 12px 0;
+}
+.rightBottomButton 
+{
+	padding: 10px 12px 10px 10px;
+	width: 100px;
+}
+.footerBackground 
+{
+	background-color: #ebecef;
+}
+
+#dxMainSpellCheckFormTable
+{
+	width: 480px;
+}
+#dxMainSpellCheckFormTable .contentSCFormContainer
+{
+	padding: 9px 12px 0px;
+}
+#dxSpellCheckForm .buttonsTable
+{
+	width: 100px;
+}
+#dxSpellCheckForm .buttonTableContainer
+{
+	padding-left: 10px;
+	padding-top: 5px;
+}
+#dxSpellCheckForm .checkedDivContainer
+{
+	overflow: hidden;
+	padding-top:5px;
+}
+#dxSpellCheckForm .changeToText
+{
+	padding-top: 15px;
+}
+#dxSpellCheckForm .verticalSeparator
+{
+	padding-top: 5px;
+}
+#dxSpellCheckForm .listBoxContainer
+{
+	padding-top: 5px;
+	padding-bottom: 12px;
+}
+#dxMainSpellCheckOptionsFormTable
+{
+	width: 400px;
+}
+#dxMainSpellCheckOptionsFormTable .contentSCOptionsFormContainer
+{
+	padding: 12px 12px 0px;
+}
+#dxOptionsForm .languagePanel
+{
+	padding-top: 10px;
+	padding-bottom: 12px;
+}

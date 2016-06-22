@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Rep_Stock_de_Unidades_egreso_egreso" targetNamespace="http://tempuri.org/Rep_Stock_de_Unidades_egreso_egreso.xsd" xmlns:mstns="http://tempuri.org/Rep_Stock_de_Unidades_egreso_egreso.xsd" xmlns="http://tempuri.org/Rep_Stock_de_Unidades_egreso_egreso.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Rep_Stock_de_Unidades_egreso_egreso" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="Rep_Stock_de_Unidades_egreso_egreso" msprop:Generator_UserDSName="Rep_Stock_de_Unidades_egreso_egreso">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Rep_Stock_de_Unidades_egreso_egreso" msprop:Generator_TableClassName="Rep_Stock_de_Unidades_egreso_egresoDataTable" msprop:Generator_TableVarName="tableRep_Stock_de_Unidades_egreso_egreso" msprop:Generator_TablePropName="_Rep_Stock_de_Unidades_egreso_egreso" msprop:Generator_RowDeletingName="Rep_Stock_de_Unidades_egreso_egresoRowDeleting" msprop:Generator_RowChangingName="Rep_Stock_de_Unidades_egreso_egresoRowChanging" msprop:Generator_RowEvHandlerName="Rep_Stock_de_Unidades_egreso_egresoRowChangeEventHandler" msprop:Generator_RowDeletedName="Rep_Stock_de_Unidades_egreso_egresoRowDeleted" msprop:Generator_UserTableName="Rep_Stock_de_Unidades_egreso_egreso" msprop:Generator_RowChangedName="Rep_Stock_de_Unidades_egreso_egresoRowChanged" msprop:Generator_RowEvArgName="Rep_Stock_de_Unidades_egreso_egresoRowChangeEvent" msprop:Generator_RowClassName="Rep_Stock_de_Unidades_egreso_egresoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="NICOP" msprop:Generator_ColumnVarNameInTable="columnNICOP" msprop:Generator_ColumnPropNameInRow="NICOP" msprop:Generator_ColumnPropNameInTable="NICOPColumn" msprop:Generator_UserColumnName="NICOP" type="xs:string" minOccurs="0" />
+              <xs:element name="EMPRESA" msprop:Generator_ColumnVarNameInTable="columnEMPRESA" msprop:Generator_ColumnPropNameInRow="EMPRESA" msprop:Generator_ColumnPropNameInTable="EMPRESAColumn" msprop:Generator_UserColumnName="EMPRESA" type="xs:string" minOccurs="0" />
+              <xs:element name="MODELO" msprop:Generator_ColumnVarNameInTable="columnMODELO" msprop:Generator_ColumnPropNameInRow="MODELO" msprop:Generator_ColumnPropNameInTable="MODELOColumn" msprop:Generator_UserColumnName="MODELO" type="xs:string" minOccurs="0" />
+              <xs:element name="CHASIS" msprop:Generator_ColumnVarNameInTable="columnCHASIS" msprop:Generator_ColumnPropNameInRow="CHASIS" msprop:Generator_ColumnPropNameInTable="CHASISColumn" msprop:Generator_UserColumnName="CHASIS" type="xs:string" minOccurs="0" />
+              <xs:element name="I_UNIDAD" msprop:Generator_ColumnVarNameInTable="columnI_UNIDAD" msprop:Generator_ColumnPropNameInRow="I_UNIDAD" msprop:Generator_ColumnPropNameInTable="I_UNIDADColumn" msprop:Generator_UserColumnName="I_UNIDAD" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="I_DOC" msprop:Generator_ColumnVarNameInTable="columnI_DOC" msprop:Generator_ColumnPropNameInRow="I_DOC" msprop:Generator_ColumnPropNameInTable="I_DOCColumn" msprop:Generator_UserColumnName="I_DOC" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="E_DOC" msprop:Generator_ColumnVarNameInTable="columnE_DOC" msprop:Generator_ColumnPropNameInRow="E_DOC" msprop:Generator_ColumnPropNameInTable="E_DOCColumn" msprop:Generator_UserColumnName="E_DOC" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="USUARIO" msprop:Generator_ColumnVarNameInTable="columnUSUARIO" msprop:Generator_ColumnPropNameInRow="USUARIO" msprop:Generator_ColumnPropNameInTable="USUARIOColumn" msprop:Generator_UserColumnName="USUARIO" type="xs:string" minOccurs="0" />
+              <xs:element name="EGRESO" msprop:Generator_ColumnVarNameInTable="columnEGRESO" msprop:Generator_ColumnPropNameInRow="EGRESO" msprop:Generator_ColumnPropNameInTable="EGRESOColumn" msprop:Generator_UserColumnName="EGRESO" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

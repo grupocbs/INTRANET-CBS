@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Rep_Control_Stock_Fisico" targetNamespace="http://tempuri.org/Rep_Control_Stock_Fisico.xsd" xmlns:mstns="http://tempuri.org/Rep_Control_Stock_Fisico.xsd" xmlns="http://tempuri.org/Rep_Control_Stock_Fisico.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="Rep_Control_Stock_Fisico" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="_Rep_Control_Stock_Fisico" msprop:Generator_UserDSName="Rep_Control_Stock_Fisico">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Rep_Control_Stock_Fisico" msprop:Generator_TableClassName="Rep_Control_Stock_FisicoDataTable" msprop:Generator_TableVarName="tableRep_Control_Stock_Fisico" msprop:Generator_TablePropName="Rep_Control_Stock_Fisico" msprop:Generator_RowDeletingName="Rep_Control_Stock_FisicoRowDeleting" msprop:Generator_RowChangingName="Rep_Control_Stock_FisicoRowChanging" msprop:Generator_RowEvHandlerName="Rep_Control_Stock_FisicoRowChangeEventHandler" msprop:Generator_RowDeletedName="Rep_Control_Stock_FisicoRowDeleted" msprop:Generator_UserTableName="Rep_Control_Stock_Fisico" msprop:Generator_RowChangedName="Rep_Control_Stock_FisicoRowChanged" msprop:Generator_RowEvArgName="Rep_Control_Stock_FisicoRowChangeEvent" msprop:Generator_RowClassName="Rep_Control_Stock_FisicoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FILTRO" msprop:Generator_ColumnVarNameInTable="columnFILTRO" msprop:Generator_ColumnPropNameInRow="FILTRO" msprop:Generator_ColumnPropNameInTable="FILTROColumn" msprop:Generator_UserColumnName="FILTRO" type="xs:string" minOccurs="0" />
+              <xs:element name="EMPRESA" msprop:Generator_ColumnVarNameInTable="columnEMPRESA" msprop:Generator_ColumnPropNameInRow="EMPRESA" msprop:Generator_ColumnPropNameInTable="EMPRESAColumn" msprop:Generator_UserColumnName="EMPRESA" type="xs:string" minOccurs="0" />
+              <xs:element name="MODELO" msprop:Generator_ColumnVarNameInTable="columnMODELO" msprop:Generator_ColumnPropNameInRow="MODELO" msprop:Generator_ColumnPropNameInTable="MODELOColumn" msprop:Generator_UserColumnName="MODELO" type="xs:string" minOccurs="0" />
+              <xs:element name="CHASIS" msprop:Generator_ColumnVarNameInTable="columnCHASIS" msprop:Generator_ColumnPropNameInRow="CHASIS" msprop:Generator_ColumnPropNameInTable="CHASISColumn" msprop:Generator_UserColumnName="CHASIS" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,66 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
+
+<%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
+    Namespace="DevExpress.Web" TagPrefix="dx" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es-ES">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="~/css/Site.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <table align="center">
+                    <tr>
+                        <td>
+                            <img src="imagenes/logo_header.png" height="100px" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="loginDisplay">
+                <table align="right">
+                    <tr>
+                        <td>
+                            <dx:ASPxMenu ID="ASPxMenu1" runat="server" AllowSelectItem="True" ShowPopOutImages="True"
+                                RenderMode="Lightweight" OnItemClick="ASPxMenu1_ItemClick" Border-BorderStyle="Solid"
+                                Border-BorderColor="Red" Border-BorderWidth="1" AutoSeparators="All">
+                                <Items>
+                                    <dx:MenuItem Name="nkb_cerrar" Visible="false" Text="Cerrar sesión">
+                                    </dx:MenuItem>
+                                    <dx:MenuItem Name="nkb_notificaciones" Visible="false" Text="Mis Notificaciones">
+                                    </dx:MenuItem>
+                                </Items>
+                            </dx:ASPxMenu>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="clear hideSkiplink">
+                <dx:ASPxMenu ID="NavigationMenu" runat="server" AllowSelectItem="True" ShowPopOutImages="True"
+                    OnItemClick="NavigationMenu_MenuItemClick" RenderMode="Lightweight">
+                </dx:ASPxMenu>
+            </div>
+        </div>
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="footer">
+            Bienvenido
+            <br />
+            <asp:Label ID="lbl_footer" runat="server" Text=""></asp:Label>
+        </div>
+    </div>
+    </form>
+</body>
+</html>
