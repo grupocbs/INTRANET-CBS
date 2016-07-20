@@ -60,16 +60,16 @@ public partial class Notificaciones : System.Web.UI.Page
 
 
 
-
+/*
             fileManager.SettingsFolders.ShowFolderIcons = true;
             fileManager.SettingsEditing.AllowCreate = true;
             fileManager.SettingsEditing.AllowRename = true;
             fileManager.SettingsEditing.AllowMove = true;
             fileManager.SettingsEditing.AllowDelete = true;
             fileManager.SettingsUpload.Enabled = true;
-            //fileManager.Settings.RootFolder = "~/Archivos/Compartida";
+            
 
-            fileManager.SettingsFileList.View = FileListView.Details;
+            fileManager.SettingsFileList.View = FileListView.Details;*/
 
         }
         catch (Exception ex)
@@ -87,14 +87,14 @@ public partial class Notificaciones : System.Web.UI.Page
 
         try
         {
-            if (Directory.Exists(MapPath("~/Archivos/Compartida")))
+          /*  if (Directory.Exists(MapPath("~/Archivos/Compartida")))
             {
                 fileManager.Settings.RootFolder = "~/Archivos/Compartida";
             }
             else
             {
                 FailureText.Text = "Carpeta compartida no esta disponible";
-            }
+            }*/
             
         }
         catch (Exception ex)

@@ -29,7 +29,7 @@
                             </ajaxToolkit:Accordion>
                         </td>
                     </tr>
-                    <tr>
+                  <%--  <tr>
                         <td valign="top">
                             <h2>
                                 Compartida
@@ -54,7 +54,7 @@
 }" />
                             </dx:ASPxFileManager>
                         </td>
-                    </tr>
+                    </tr>--%>
                 </table>
             </td>
         </tr>

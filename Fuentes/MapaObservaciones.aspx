@@ -85,7 +85,115 @@
         </tr>
         <tr>
             <td>
-                <cc1:GMap ID="GMap1" runat="server" Width="100%" Height="600px" />
+                <asp:Panel ID="panel_buscarequipo" GroupingText="Encontrar Equipo" runat="server">
+                    <table>
+                        <tr>
+                            <td>
+                                <u>Ingresar al siguiente link con el Mail y contraseña.</u>
+                            </td>
+                            <td>
+                                <a target="_blank" href="https://findmymobile.samsung.com/">https://findmymobile.samsung.com/</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <u>Mail (Usuario):</u>
+                            </td>
+                            <td>
+                                <asp:Label runat="server" ID="lbl_mail"></asp:Label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <u>Contraseña:</u>
+                            </td>
+                            <td>
+                                <asp:Label runat="server" ID="lbl_contra"></asp:Label>
+                            </td>
+                        </tr>
+                    </table>
+                </asp:Panel>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Panel ID="panel1" GroupingText="Observaciones Cargadas" runat="server">
+                    <table width="100%" align="center">
+                        <tr>
+                            <td valign="top">
+                                <dx:ASPxGridView ID="ASPxGridView1" runat="server" Width="100%" KeyFieldName="CODIGO"
+                                    EnableCallBacks="false" ClientInstanceName="grid" OnCustomButtonCallback="fotosGrid_CustomButtonCallback">
+                                    <ClientSideEvents CustomButtonClick="function(s, e) 
+                     {
+                        e.processOnServer = true;
+
+                     }" />
+                                    <Settings ShowStatusBar="Hidden" />
+                                    <SettingsPager Mode="ShowAllRecords" />
+                                    <Columns>
+                                        <dx:GridViewDataColumn VisibleIndex="1" FieldName="CODIGO">
+                                        </dx:GridViewDataColumn>
+                                        <dx:GridViewDataColumn VisibleIndex="2" FieldName="OBJETIVO">
+                                        </dx:GridViewDataColumn>
+                                        <dx:GridViewDataColumn VisibleIndex="3" FieldName="FECHA">
+                                        </dx:GridViewDataColumn>
+                                        <dx:GridViewDataColumn VisibleIndex="4" FieldName="TIPO">
+                                        </dx:GridViewDataColumn>
+                                        <dx:GridViewDataColumn VisibleIndex="5" FieldName="OBSERVACION">
+                                        </dx:GridViewDataColumn>
+                                        <dx:GridViewCommandColumn VisibleIndex="6">
+                                            <CustomButtons>
+                                                <dx:GridViewCommandColumnCustomButton ID="button" Text="Ubicar en el Mapa">
+                                                </dx:GridViewCommandColumnCustomButton>
+                                            </CustomButtons>
+                                        </dx:GridViewCommandColumn>
+                                    </Columns>
+                                    <Templates>
+                                        <DetailRow>
+                                            <div style="padding: 3px 3px 2px 3px">
+                                                <dx:ASPxPageControl runat="server" ID="pageControl" EnableCallBacks="true">
+                                                    <TabPages>
+                                                        <dx:TabPage Text="FOTOS">
+                                                            <ContentCollection>
+                                                                <dx:ContentControl ID="ContentControl2" runat="server">
+                                                                    <dx:ASPxGridView ID="fotosGrid" runat="server" KeyFieldName="TITULO" OnBeforePerformDataSelect="fotosGrid_DataSelect"
+                                                                        AutoGenerateColumns="false">
+                                                                        <Columns>
+                                                                            <dx:GridViewDataColumn FieldName="TITULO" VisibleIndex="1" />
+                                                                            <dx:GridViewDataColumn FieldName="FOTO" Caption="FOTO" VisibleIndex="2" Width="50px">
+                                                                                <DataItemTemplate>
+                                                                                    <table align="center">
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <%# "<a target='_blank' href='http://192.168.1.141:3333/archivos/capturas/" + Eval("SUP").ToString() + "/" + Eval("CODIGO").ToString() + "/" + Eval("TITULO").ToString()+ "'><img width='50px' src='http://192.168.1.141:3333/archivos/capturas/" + Eval("SUP").ToString() + "/" + Eval("CODIGO").ToString() + "/" + Eval("TITULO").ToString() +"' border='0' /></a>"%>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </table>
+                                                                                </DataItemTemplate>
+                                                                            </dx:GridViewDataColumn>
+                                                                        </Columns>
+                                                                        <Settings ShowFooter="True" />
+                                                                        <SettingsDetail IsDetailGrid="True" />
+                                                                    </dx:ASPxGridView>
+                                                                </dx:ContentControl>
+                                                            </ContentCollection>
+                                                        </dx:TabPage>
+                                                    </TabPages>
+                                                </dx:ASPxPageControl>
+                                            </div>
+                                        </DetailRow>
+                                    </Templates>
+                                    <SettingsDetail ShowDetailRow="true" />
+                                </dx:ASPxGridView>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center">
+                                <cc1:GMap ID="GMap1" runat="server" Width="600px" Height="400px" />
+                            </td>
+                        </tr>
+                    </table>
+                </asp:Panel>
             </td>
         </tr>
     </table>

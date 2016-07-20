@@ -26,7 +26,7 @@ public partial class RRHH_TEL_INTERNOS : System.Web.UI.Page
     {
         try
         {
-            ASPxGridView1.DataSource = Interfaz.EjecutarConsultaBD("LocalSqlServer", "SELECT * FROM INTERNOS with(nolock) ");
+            ASPxGridView1.DataSource = Interfaz.EjecutarConsultaBD("LocalSqlServer", "SELECT * FROM INTERNOS with(nolock) ORDER BY INTERNO  ");
             ASPxGridView1.DataBind();
 
         }
@@ -95,7 +95,7 @@ public partial class RRHH_TEL_INTERNOS : System.Web.UI.Page
     {
         try
         {
-            Interfaz.EditarInterno(e.NewValues["INTERNO"].ToString(), e.OldValues["AREA"].ToString(), e.NewValues["INTEGRANTES"].ToString(), e.Keys[0].ToString());
+            Interfaz.EditarInterno(e.NewValues["INTERNO"].ToString(), e.NewValues["AREA"].ToString(), e.NewValues["INTEGRANTES"].ToString(), e.Keys[0].ToString());
 
             Recargar();
             e.Cancel = true;
