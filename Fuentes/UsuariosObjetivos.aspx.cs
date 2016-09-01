@@ -9,17 +9,17 @@ using System.Data.SqlClient;
 using System.Configuration;
 
 
-public partial class UsuariosClientes : System.Web.UI.Page
+public partial class UsuariosObjetivos : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
         try
         {
-            /*if (Session["usuario"] == null)
+            if (Session["usuario"] == null)
             {
 
                 Response.Redirect("login.aspx");
-            }*/
+            }
             if (!IsPostBack)
             {
 
@@ -104,9 +104,11 @@ public partial class UsuariosClientes : System.Web.UI.Page
         {
 
 
-            string sql = "SELECT VTMCLH_NROCTA, VTMCLH_NOMBRE";
-            sql += " FROM VTMCLH with(nolock)";
-            sql += " ORDER BY VTMCLH_NOMBRE";
+            string sql = "SELECT USR_CLIOBJ_CODOBJ, NOMBRE=USR_CLIOBJ_OBJDSC + ' - '+ VTMCLH_NOMBRE";
+            sql += " FROM USR_CLIOBJ o with(nolock)";
+	    sql += " left join VTMCLH c with(nolock)";
+ 	    sql += " on o.USR_CLIOBJ_CODCLI=c.VTMCLH_NROCTA";
+            sql += " ORDER BY USR_CLIOBJ_OBJDSC + ' - ' + VTMCLH_NOMBRE";
 
 
 
@@ -119,8 +121,8 @@ public partial class UsuariosClientes : System.Web.UI.Page
             {
 
                 TreeViewNode mnuMenuItem = new TreeViewNode();
-                mnuMenuItem.Name = drMenuItem["VTMCLH_NROCTA"].ToString();
-                mnuMenuItem.Text = drMenuItem["VTMCLH_NROCTA"].ToString() + "-" + drMenuItem["VTMCLH_NOMBRE"].ToString();
+                mnuMenuItem.Name = drMenuItem["USR_CLIOBJ_CODOBJ"].ToString();
+                mnuMenuItem.Text = drMenuItem["NOMBRE"].ToString();
 
                 TreeView1.Nodes.Add(mnuMenuItem);
             }
@@ -139,8 +141,8 @@ public partial class UsuariosClientes : System.Web.UI.Page
     {
         try
         {
-            string sql = "SELECT CLIENTE";
-            sql += " FROM USUARIO_CLIENTES with(nolock)";
+            string sql = "SELECT OBJETIVO";
+            sql += " FROM USUARIO_OBJETIVO with(nolock)";
             sql += " WHERE usuario='" + usuario + "'";
 
             DataTable dtMenuItems = new DataTable();
@@ -151,7 +153,7 @@ public partial class UsuariosClientes : System.Web.UI.Page
             foreach (DataRow drMenuItem in dtMenuItems.Rows)
             {
 
-                it(drMenuItem["CLIENTE"].ToString());
+                it(drMenuItem["OBJETIVO"].ToString());
 
             }
         }
@@ -208,7 +210,7 @@ public partial class UsuariosClientes : System.Web.UI.Page
             if (ASPxComboBox1.SelectedItem.Value.ToString() != "SELECCIONE")
             {
                 FailureText.Text = "";
-                Interfaz.EliminarClientePorUsuario(ASPxComboBox1.SelectedItem.Value.ToString());
+                Interfaz.EliminarObjetivoPorUsuario(ASPxComboBox1.SelectedItem.Value.ToString());
 
                 foreach (TreeViewNode t in TreeView1.Nodes)
                 {
@@ -234,7 +236,7 @@ public partial class UsuariosClientes : System.Web.UI.Page
         {
             if (t.Checked)
             {
-                Interfaz.AgregarClientePorUsuario(usuario, Convert.ToInt32(t.Name));
+                Interfaz.AgregarObjetivoPorUsuario(usuario, t.Name);
                 foreach (TreeViewNode temp in t.Nodes)
                 {
                     search_guardar(temp, usuario);

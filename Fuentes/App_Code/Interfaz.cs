@@ -400,7 +400,7 @@ public class Interfaz
         {
             DevExpress.Web.MenuItemCollection m = new DevExpress.Web.MenuItemCollection();
 
-            string sql = "SELECT Usuario, Contraseña, Nombre, Mail, Supervisor, Imei";
+            string sql = "SELECT Usuario, Contraseña, Nombre, Mail, Supervisor, Imei, Servicio";
             sql += " FROM Usuarios with(nolock)";
 
             if (usuario.Length > 0)
@@ -447,7 +447,7 @@ public class Interfaz
         }
 
     }
-    public static void EditarCuentaUsuario(string nuevo_usuario, string viejo_usuario, string contraseña, string nombre, string mail, string supervisor, string imei)
+    public static void EditarCuentaUsuario(string nuevo_usuario, string viejo_usuario, string contraseña, string nombre, string mail, string supervisor, string imei, string servicio)
     {
         try
         {
@@ -456,6 +456,7 @@ public class Interfaz
             string sql = "UPDATE Usuarios SET usuario='" + nuevo_usuario + "' , contraseña='" + contraseña + "' , nombre='" + nombre + "' , mail='" + mail + "'";
             sql += ", supervisor='" + supervisor + "'";
             sql += ", imei='" + imei + "'";
+ sql += ", servicio='" + servicio + "'";
 
             sql += " WHERE usuario='" + viejo_usuario + "'";
 
@@ -475,14 +476,14 @@ public class Interfaz
         }
 
     }
-    public static void AgregarCuentaUsuario(string usuario, string contraseña, string nombre, string mail, string supervisor, string imei)
+    public static void AgregarCuentaUsuario(string usuario, string contraseña, string nombre, string mail, string supervisor, string imei, string servicio)
     {
         try
         {
 
 
-            string sql = "INSERT INTO Usuarios (usuario, contraseña, nombre, mail,supervisor, imei) ";
-            sql += " VALUES ('" + usuario + "','" + contraseña + "','" + nombre + "','" + mail + "','" +supervisor + "','" + imei + "')";
+            string sql = "INSERT INTO Usuarios (usuario, contraseña, nombre, mail,supervisor, imei,servicio) ";
+            sql += " VALUES ('" + usuario + "','" + contraseña + "','" + nombre + "','" + mail + "','" +supervisor + "','" + imei + "','"+servicio+"')";
 
 
             DataTable dtMenuItems = new DataTable();
@@ -1684,7 +1685,32 @@ public class Interfaz
         }
 
     }
-    public static void AgregarClientePorUsuario(string usuario, int cliente)
+public static void EliminarObjetivoPorUsuario(string usuario)
+    {
+        try
+        {
+
+
+            string sql = "DELETE FROM USUARIO_OBJETIVO ";
+            sql += " WHERE usuario='" + usuario + "'";
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - EliminarClientePorUsuario(string usuario)");
+        }
+
+    }
+    public static void AgregarClientePorUsuario(string usuario, string cliente)
     {
         try
         {
@@ -1699,6 +1725,36 @@ public class Interfaz
 
             sql = " INSERT INTO USUARIO_CLIENTES (usuario, cliente) ";
             sql += " VALUES ('" + usuario + "','" + cliente + "')";
+            daMenu.CommandText = sql;
+            daMenu.ExecuteNonQuery();
+
+
+
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+
+            throw new Exception(ex.Message + " - AgregarPerfil(string descripcion, List<int> menuid)");
+        }
+
+    }
+ public static void AgregarObjetivoPorUsuario(string usuario, string objetivo)
+    {
+        try
+        {
+
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand();
+            daMenu.Connection = new SqlConnection(strConnString);
+            string sql = "";
+
+
+            daMenu.Connection.Open();
+
+            sql = " INSERT INTO USUARIO_OBJETIVO (usuario, objetivo) ";
+            sql += " VALUES ('" + usuario + "','" + objetivo + "')";
             daMenu.CommandText = sql;
             daMenu.ExecuteNonQuery();
 

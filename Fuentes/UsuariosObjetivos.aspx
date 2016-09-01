@@ -1,5 +1,5 @@
 ﻿<%@ Page Title="Página principal" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
-    CodeFile="UsuariosClientes.aspx.cs" Inherits="UsuariosClientes" %>
+    CodeFile="UsuariosObjetivos.aspx.cs" Inherits="UsuariosObjetivos" %>
 
 <%@ Register Assembly="DevExpress.Web.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Web" TagPrefix="dx" %>

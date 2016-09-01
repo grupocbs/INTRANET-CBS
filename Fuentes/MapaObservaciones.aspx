@@ -122,7 +122,8 @@
                         <tr>
                             <td valign="top">
                                 <dx:ASPxGridView ID="ASPxGridView1" runat="server" Width="100%" KeyFieldName="CODIGO"
-                                    EnableCallBacks="false" ClientInstanceName="grid" OnCustomButtonCallback="fotosGrid_CustomButtonCallback">
+                                    OnHtmlDataCellPrepared="ASPxGridView1_HtmlDataCellPrepared" EnableCallBacks="false"
+                                    ClientInstanceName="grid" OnCustomButtonCallback="fotosGrid_CustomButtonCallback">
                                     <ClientSideEvents CustomButtonClick="function(s, e) 
                      {
                         e.processOnServer = true;
@@ -133,17 +134,25 @@
                                     <Columns>
                                         <dx:GridViewDataColumn VisibleIndex="1" FieldName="CODIGO">
                                         </dx:GridViewDataColumn>
-                                        <dx:GridViewDataColumn VisibleIndex="2" FieldName="OBJETIVO">
+                                        <dx:GridViewDataColumn VisibleIndex="2" FieldName="SUP">
                                         </dx:GridViewDataColumn>
-                                        <dx:GridViewDataColumn VisibleIndex="3" FieldName="FECHA">
+                                        <dx:GridViewDataColumn VisibleIndex="3" FieldName="OBJETIVO">
                                         </dx:GridViewDataColumn>
-                                        <dx:GridViewDataColumn VisibleIndex="4" FieldName="TIPO">
+                                        <dx:GridViewDataColumn VisibleIndex="4" FieldName="FECHA">
                                         </dx:GridViewDataColumn>
-                                        <dx:GridViewDataColumn VisibleIndex="5" FieldName="OBSERVACION">
+                                        <dx:GridViewDataColumn VisibleIndex="5" FieldName="TIPO">
                                         </dx:GridViewDataColumn>
-                                        <dx:GridViewCommandColumn VisibleIndex="6">
+                                        <dx:GridViewDataColumn VisibleIndex="6" FieldName="ESTADO">
+                                        </dx:GridViewDataColumn>
+                                        <dx:GridViewDataColumn VisibleIndex="7" FieldName="FOTOS">
+                                        </dx:GridViewDataColumn>
+                                        <dx:GridViewDataColumn VisibleIndex="8" FieldName="OBS">
+                                        </dx:GridViewDataColumn>
+                                        <dx:GridViewDataColumn VisibleIndex="9" FieldName="RTA">
+                                        </dx:GridViewDataColumn>
+                                        <dx:GridViewCommandColumn VisibleIndex="10">
                                             <CustomButtons>
-                                                <dx:GridViewCommandColumnCustomButton ID="button" Text="Ubicar en el Mapa">
+                                                <dx:GridViewCommandColumnCustomButton ID="button" Text="Mapa">
                                                 </dx:GridViewCommandColumnCustomButton>
                                             </CustomButtons>
                                         </dx:GridViewCommandColumn>
@@ -189,7 +198,9 @@
                         </tr>
                         <tr>
                             <td align="center">
-                                <cc1:GMap ID="GMap1" runat="server" Width="600px" Height="400px" />
+                                <div id="seccion1">
+                                    <cc1:GMap ID="GMap1" runat="server" Width="100%" Height="400px" />
+                                </div>
                             </td>
                         </tr>
                     </table>
