@@ -68,12 +68,12 @@ public partial class SiteMaster : System.Web.UI.MasterPage
                 ASPxMenu1.Items[0].Visible = false;
                 ASPxMenu1.Items[1].Visible = false;
                 lbl_footer.Text = "";
-                Response.Redirect("Login.aspx");
+                Response.Redirect("INTRANET_LOGIN.aspx");
             }
 
             if (e.Item.Name == "nkb_notificaciones")
             {
-                Response.Redirect("Notificaciones.aspx");
+                Response.Redirect("INTRANET_NOTIFICACIONES.aspx");
             }
 
         }

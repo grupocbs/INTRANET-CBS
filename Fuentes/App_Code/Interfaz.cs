@@ -80,11 +80,9 @@ public class Interfaz
 
             DevExpress.Web.MenuItemCollection m = new DevExpress.Web.MenuItemCollection();
 
-            string sql = "SELECT m.MenuId, Descripcion, Posicion, PadreId, Icono, Url";
-            sql += " FROM Menu m with(nolock)";
-            sql += " LEFT JOIN UsuarioMenu mu with(nolock)";
-            sql += " ON m.menuid=mu.menuid";
+            string sql = "select m.MENUID, Descripcion, Posicion, PadreId, Icono, Url FROM menu m with(nolock) LEFT JOIN UsuarioMenu mu with(nolock) ON m.MENUID=mu.MENUID";
             sql += " WHERE mu.idusuario=" + idusuario;
+            sql += " order by Descripcion";
 
 
             DataTable dtMenuItems = new DataTable();
@@ -94,11 +92,11 @@ public class Interfaz
 
             foreach (DataRow drMenuItem in dtMenuItems.Rows)
             {
-                if (drMenuItem["MenuId"].Equals(drMenuItem["PadreId"]))
+                if (drMenuItem["MENUID"].Equals(drMenuItem["PadreId"]))
                 {
                     DevExpress.Web.MenuItem mnuMenuItem = new DevExpress.Web.MenuItem();
-                    mnuMenuItem.Name = drMenuItem["MenuId"].ToString();
-                    mnuMenuItem.Text = drMenuItem["descripcion"].ToString();
+                    mnuMenuItem.Name = drMenuItem["MENUID"].ToString();
+                    mnuMenuItem.Text = drMenuItem["Descripcion"].ToString();
                     //mnuMenuItem.ImageUrl = drMenuItem["Icono"].ToString();
 
                     mnuMenuItem.Target = drMenuItem["Url"].ToString();
@@ -400,7 +398,7 @@ public class Interfaz
         {
             DevExpress.Web.MenuItemCollection m = new DevExpress.Web.MenuItemCollection();
 
-            string sql = "SELECT Usuario, Contraseña, Nombre, Mail, Supervisor, Imei, Servicio";
+            string sql = "SELECT Usuario, Contraseña, Nombre, Mail, Supervisor, Imei, Servicio, Telefono,id_sector";
             sql += " FROM Usuarios with(nolock)";
 
             if (usuario.Length > 0)
@@ -447,7 +445,7 @@ public class Interfaz
         }
 
     }
-    public static void EditarCuentaUsuario(string nuevo_usuario, string viejo_usuario, string contraseña, string nombre, string mail, string supervisor, string imei, string servicio)
+    public static void EditarCuentaUsuario(string nuevo_usuario, string viejo_usuario, string contraseña, string nombre, string mail, string supervisor, string imei, string servicio, string telefono, string sector)
     {
         try
         {
@@ -456,8 +454,9 @@ public class Interfaz
             string sql = "UPDATE Usuarios SET usuario='" + nuevo_usuario + "' , contraseña='" + contraseña + "' , nombre='" + nombre + "' , mail='" + mail + "'";
             sql += ", supervisor='" + supervisor + "'";
             sql += ", imei='" + imei + "'";
- sql += ", servicio='" + servicio + "'";
-
+            sql += ", servicio='" + servicio + "'";
+            sql += ", telefono='" + telefono + "'";
+            sql += ", ID_SECTOR='" + sector + "'";
             sql += " WHERE usuario='" + viejo_usuario + "'";
 
 
@@ -470,20 +469,21 @@ public class Interfaz
             daMenu.Connection.Close();
             daMenu.Dispose();
         }
+
         catch (Exception ex)
         {
             throw new Exception(ex.Message + " - EliminarCuentaUsuario(string usuario)");
         }
 
     }
-    public static void AgregarCuentaUsuario(string usuario, string contraseña, string nombre, string mail, string supervisor, string imei, string servicio)
+    public static void AgregarCuentaUsuario(string usuario, string contraseña, string nombre, string mail, string supervisor, string imei, string servicio, string telefono, string sector)
     {
         try
         {
 
 
-            string sql = "INSERT INTO Usuarios (usuario, contraseña, nombre, mail,supervisor, imei,servicio) ";
-            sql += " VALUES ('" + usuario + "','" + contraseña + "','" + nombre + "','" + mail + "','" +supervisor + "','" + imei + "','"+servicio+"')";
+            string sql = "INSERT INTO Usuarios (usuario, contraseña, nombre, mail,supervisor, imei,servicio,telefono,ID_SECTOR) ";
+            sql += " VALUES ('" + usuario + "','" + contraseña + "','" + nombre + "','" + mail + "','" + supervisor + "','" + imei + "','" + servicio + "','" + telefono + "','" + sector + "')";
 
 
             DataTable dtMenuItems = new DataTable();
@@ -1444,13 +1444,13 @@ public class Interfaz
         }
 
     }
-    public static void EditarInterno(string interno, string area, string integrantes, string idinterno)
+    public static void EditarInterno(string idinterno,string INTERNO, string AREA, string INTEGRANTES, string CORPORATIVO, string POSICION)
     {
         try
         {
 
 
-            string sql = "UPDATE INTERNOS SET interno='" + interno + "' , area='" + area + "', integrantes='" + integrantes + "'";
+            string sql = "UPDATE INTERNOS SET INTERNO='" + INTERNO + "' , AREA='" + AREA + "', INTEGRANTES='" + INTEGRANTES + "',CORPORATIVO='" + CORPORATIVO + "',POSICION='"+POSICION+"'";
             sql += " WHERE idinterno=" + idinterno;
 
 
@@ -1469,14 +1469,14 @@ public class Interfaz
         }
 
     }
-    public static void AgregarInterno(string interno, string area, string integrantes)
+    public static void AgregarInterno(string INTERNO, string AREA, string INTEGRANTES, string CORPORATIVO, string POSICION)
     {
         try
         {
 
 
-            string sql = "INSERT INTO INTERNOS (interno, area,integrantes) ";
-            sql += " VALUES ('" + interno + "','" + area + "','" + integrantes + "')";
+            string sql = "INSERT INTO INTERNOS (INTERNO, AREA,INTEGRANTES, CORPORATIVO,POSICION) ";
+            sql += " VALUES ('" + INTERNO + "','" + AREA + "','" + INTEGRANTES + "','" + CORPORATIVO + "','" + POSICION + "')";
 
 
             DataTable dtMenuItems = new DataTable();
@@ -1494,6 +1494,7 @@ public class Interfaz
         }
 
     }
+   
     #endregion
 
     #region NOTIFICACIONES
@@ -1770,6 +1771,1059 @@ public static void EliminarObjetivoPorUsuario(string usuario)
         }
 
     }
+    #endregion
+
+    #region RRHH
+    public static void Alta_SOLICITUD_INGRESO(DateTime FECHA_ALTA,DateTime FECHA_BAJA,string CUIL, string APELLIDO,string NOMBRES,string DOMICILIO_REAL,string COD_OS,string COD_CONV,string REMUNERACION_NETA,string COD_CENTRO_COSTO,string COD_OBJETIVO,string USUARIO,string COD_CLIENTE, bool INTERNO,string ID_RECLUTAMIENTO, string RAZON_SOCIAL, string COD_CATEGORIA)
+ {
+     try
+     {
+
+
+         string sql = "INSERT INTO [RRHH_SOLICITUD_INGRESO] (FECHA_ALTA,FECHA_BAJA,CUIL,APELLIDO,NOMBRES,DOMICILIO_REAL,COD_OS,COD_CONV,COD_CENTRO_COSTO,COD_OBJETIVO,TAREAS,USUARIO,COD_CLIENTE,INTERNO,ID_RECLUTAMIENTO,RAZON_SOCIAL,COD_CATEGORIA)";
+         sql += " VALUES ('" + FECHA_ALTA.ToString("yyyyMMdd") + "','" + FECHA_BAJA.ToString("yyyyMMdd") + "','" + CUIL + "','" + APELLIDO + "','" + NOMBRES + "','" + DOMICILIO_REAL + "','" + COD_OS + "','" + COD_CONV + "','" + COD_CENTRO_COSTO + "','" + COD_OBJETIVO + "','" + USUARIO + "','" + COD_CLIENTE + "'," + ((INTERNO) ? 1 : 0) + "," + ID_RECLUTAMIENTO + ",'" + RAZON_SOCIAL + "','" + COD_CATEGORIA + "')";
+
+
+         DataTable dtMenuItems = new DataTable();
+         string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+         SqlCommand daMenu = new SqlCommand(sql);
+         daMenu.Connection = new SqlConnection(strConnString);
+         daMenu.Connection.Open();
+         daMenu.ExecuteNonQuery();
+         daMenu.Connection.Close();
+         daMenu.Dispose();
+     }
+     catch (Exception ex)
+     {
+         throw new Exception(ex.Message + " - RRHH_SOLICITUD_INGRESO(DateTime FECHA_ALTA,DateTime FECHA_BAJA,string CUIL, string APELLIDO,string NOMBRES,string DOMICILIO_REAL,string COD_OS,string COD_CONV,string REMUNERACION_NETA,string COD_CENTRO_COSTO,string COD_OBJETIVO,string TAREAS,string USUARIO,string COD_CLIENTE))");
+     }
+
+ }
+    public static void Editar_SOLICITUD_INGRESO(string id, DateTime FECHA_ALTA, DateTime FECHA_BAJA, string CUIL, string APELLIDO, string NOMBRES, string DOMICILIO_REAL, string COD_OS, string COD_CONV, string COD_CENTRO_COSTO, string COD_OBJETIVO, string USUARIO, string COD_CLIENTE, bool INTERNO, string ID_RECLUTAMIENTO, string RAZON_SOCIAL, string COD_CATEGORIA, string TIPO_CONTRATO, string OBSERVACIONES, string COD_ZONA)
+    {
+        try
+        {
+            string sql = "UPDATE [RRHH_SOLICITUD_INGRESO] ";
+            sql += " SET FECHA_ALTA='" + FECHA_ALTA.ToString("yyyyMMdd") + "'";
+            sql += " ,FECHA_BAJA='" + FECHA_BAJA.ToString("yyyyMMdd") + "'";
+            sql += " ,CUIL='" + CUIL + "'";
+            sql += " ,APELLIDO='" + APELLIDO + "'";
+            sql += " ,NOMBRES='" + NOMBRES + "'";
+            sql += " ,DOMICILIO_REAL='" + DOMICILIO_REAL + "'";
+            sql += " ,COD_OS='" + COD_OS + "'";
+            sql += " ,COD_CONV='" + COD_CONV + "'";
+          
+            sql += " ,COD_CENTRO_COSTO='" + COD_CENTRO_COSTO + "'";
+            sql += " ,COD_OBJETIVO='" + COD_OBJETIVO + "'";
+            sql += " ,COD_ZONA='" + COD_ZONA + "'";
+            sql += " ,USUARIO='" + USUARIO + "'";
+            sql += " ,COD_CLIENTE='" + COD_CLIENTE + "'";
+            sql += " ,INTERNO=" + ((INTERNO) ? 1 : 0);
+            sql += " ,ID_RECLUTAMIENTO=" + ID_RECLUTAMIENTO;
+            sql += " ,RAZON_SOCIAL='" + RAZON_SOCIAL + "'";
+            sql += " ,COD_CATEGORIA='" + COD_CATEGORIA + "'";
+            sql += " ,TIPO_CONTRATO='" + TIPO_CONTRATO + "'";
+            sql += " ,OBSERVACIONES='" + OBSERVACIONES + "'";
+            sql += " WHERE id=" + id;
+
+          
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Editar_SOLICITUD_INGRESO(string id,DateTime FECHA_ALTA, DateTime FECHA_BAJA, string CUIL, string APELLIDO, string NOMBRES, string DOMICILIO_REAL, string COD_OS, string COD_CONV, string REMUNERACION_NETA, string COD_CENTRO_COSTO, string COD_OBJETIVO, string TAREAS, string USUARIO, string COD_CLIENTE, bool INTERNO, string ID_RECLUTAMIENTO, string RAZON_SOCIAL)");
+        }
+
+    }
+    public static void Alta_SOLICITUD_INGRESO_RECLUTAMIENTO(string CUIL, string APELLIDO, string NOMBRES, string DOMICILIO_REAL, string ID_RECLUTAMIENTO, string RAZON_SOCIAL, string OBSERVACIONES, string COD_CATEGORIA, string COD_CONV, string COD_CLIENTE, string COD_OBJETIVO, bool INTERNO)
+    {
+        try
+        {
+
+
+            string sql = "INSERT INTO [RRHH_SOLICITUD_INGRESO] (CUIL,APELLIDO,NOMBRES,DOMICILIO_REAL,ID_RECLUTAMIENTO,RAZON_SOCIAL, OBSERVACIONES,COD_CATEGORIA, COD_CONV, COD_CLIENTE, COD_OBJETIVO,INTERNO)";
+            sql += " VALUES ('" + CUIL + "','" + APELLIDO + "','" + NOMBRES + "','" + DOMICILIO_REAL + "'," + ID_RECLUTAMIENTO + ",'" + RAZON_SOCIAL + "','" + OBSERVACIONES + "','" + COD_CATEGORIA + "','" + COD_CONV + "','" + COD_CLIENTE + "','" + COD_OBJETIVO + "'," + ((INTERNO) ? 1 : 0) + ")";
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - RRHH_SOLICITUD_INGRESO(DateTime FECHA_ALTA,DateTime FECHA_BAJA,string CUIL, string APELLIDO,string NOMBRES,string DOMICILIO_REAL,string COD_OS,string COD_CONV,string REMUNERACION_NETA,string COD_CENTRO_COSTO,string COD_OBJETIVO,string TAREAS,string USUARIO,string COD_CLIENTE))");
+        }
+
+    }
+
+    public static void Alta_SOLICITUD_INGRESO_HERINFO(string ID_INGRESO, string ITEM, string OBSERVACION)
+    {
+        try
+        {
+
+
+            string sql = "INSERT INTO [RRHH_SOLICITUD_INGRESO_HERINF] (ID_INGRESO, ITEM,OBSERVACION)";
+            sql += " VALUES (" + ID_INGRESO + ",'" + ITEM + "','" + OBSERVACION + "')";
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Alta_SOLICITUD_INGRESO_HERINFO(string ID_INGRESO, string ITEM, string OBSERVACION)");
+        }
+
+    }
+    public static void Editar_SOLICITUD_INGRESO_HERINFO(string id, string ID_INGRESO, string ITEM, string OBSERVACION)
+    {
+        try
+        {
+
+
+            string sql = "UPDATE [RRHH_SOLICITUD_INGRESO_HERINF] ";
+            sql += " SET ID_INGRESO=" + ID_INGRESO;
+            sql += " ,ITEM='" + ITEM + "'";
+            sql += " ,OBSERVACION='" + OBSERVACION + "'";
+            sql += " WHERE id=" + id;
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Editar_SOLICITUD_INGRESO_HERINFO(string id, string ID_INGRESO, string ITEM, string OBSERVACION)");
+        }
+
+    }
+    public static void Editar_ESTADO_SOLICITUD_INGRESO_HERINFO(string id, bool COMPLETADO)
+    {
+        try
+        {
+
+
+            string sql = "UPDATE [RRHH_SOLICITUD_INGRESO_HERINF] ";
+            sql += " SET COMPLETADO=" + ((COMPLETADO)?1:0);
+            sql += " WHERE id=" + id;
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Editar_ESTADO_SOLICITUD_INGRESO_HERINFO(string id, bool COMPLETADO)");
+        }
+
+    }
+
+
+
+
+    public static void Alta_TIPOS_CONTRATOS(string nombre, string descripcion, string empresa)
+ {
+     try
+     {
+
+
+         string sql = "INSERT INTO [RRHH_TIPOS_CONTRATOS] (nombre, descripcion,empresa)";
+         sql += " VALUES ('" + nombre + "','" + descripcion  + "','"+empresa+"')";
+
+
+         DataTable dtMenuItems = new DataTable();
+         string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+         SqlCommand daMenu = new SqlCommand(sql);
+         daMenu.Connection = new SqlConnection(strConnString);
+         daMenu.Connection.Open();
+         daMenu.ExecuteNonQuery();
+         daMenu.Connection.Close();
+         daMenu.Dispose();
+     }
+     catch (Exception ex)
+     {
+         throw new Exception(ex.Message + " - Alta_TIPOS_CONTRATOS(string nombre, string descripcion)");
+     }
+
+ }
+    public static void Editar_TIPOS_CONTRATOS(string id,string nombre, string descripcion)
+ {
+     try
+     {
+
+
+         string sql = "UPDATE [RRHH_TIPOS_CONTRATOS] ";
+         sql += " SET nombre='" + nombre + "'";
+         sql += " ,descripcion='" + descripcion + "'";
+         sql += " WHERE id=" + id;
+
+
+         DataTable dtMenuItems = new DataTable();
+         string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+         SqlCommand daMenu = new SqlCommand(sql);
+         daMenu.Connection = new SqlConnection(strConnString);
+         daMenu.Connection.Open();
+         daMenu.ExecuteNonQuery();
+         daMenu.Connection.Close();
+         daMenu.Dispose();
+     }
+     catch (Exception ex)
+     {
+         throw new Exception(ex.Message + " - Editar_TIPOS_CONTRATOS(string id,string nombre, string descripcion)");
+     }
+
+ }
+    public static void Editar_Estado_SOLICITUD_RECLUTAMIENTO(string id, bool pendiente)
+    {
+        try
+        {
+
+
+            string sql = "UPDATE [RRHH_SOLICITUD_RECLUTAMIENTO] ";
+            sql += " SET pendiente=" + ((pendiente) ? "1" : "0");
+            sql += " WHERE id=" + id;
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Editar_Estado_SOLICITUD_RECLUTAMIENTO(string id, bool pendiente)");
+        }
+
+    }
+    public static void Alta_ADIC_CONTRATOS(string id_tipo_contrato, string nombre, string archivo)
+ {
+     try
+     {
+
+
+         string sql = "INSERT INTO [RRHH_ADIC_CONTRATOS] (ID_TIPO_CONTRATO, NOMBRE,ARCHIVO)";
+         sql += " VALUES (" + id_tipo_contrato + ",'" + nombre + "','" + archivo + "')";
+
+
+         DataTable dtMenuItems = new DataTable();
+         string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+         SqlCommand daMenu = new SqlCommand(sql);
+         daMenu.Connection = new SqlConnection(strConnString);
+         daMenu.Connection.Open();
+         daMenu.ExecuteNonQuery();
+         daMenu.Connection.Close();
+         daMenu.Dispose();
+     }
+     catch (Exception ex)
+     {
+         throw new Exception(ex.Message + " - Alta_ADIC_CONTRATOS(string id_tipo_contrato, string nombre, string archivo)");
+     }
+
+ }
+    public static void Eliminar_ADIC_CONTRATOS(string id_tipo_contrato, string nombre)
+ {
+     try
+     {
+
+
+         string sql = "DELETE FROM RRHH_ADIC_CONTRATOS ";
+         sql += " WHERE id_tipo_contrato=" + id_tipo_contrato;
+         sql += " AND nombre='" + nombre + "'";
+
+
+         DataTable dtMenuItems = new DataTable();
+         string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+         SqlCommand daMenu = new SqlCommand(sql);
+         daMenu.Connection = new SqlConnection(strConnString);
+         daMenu.Connection.Open();
+         daMenu.ExecuteNonQuery();
+         daMenu.Connection.Close();
+         daMenu.Dispose();
+     }
+     catch (Exception ex)
+     {
+         throw new Exception(ex.Message + " - Eliminar_ADIC_CONTRATOS(string id_tipo_contrato, string nombre)");
+     }
+
+ }
+
+    public static void Alta_SOLICITUD_RECLUTAMIENTO(DateTime FECHA_SOLICITUD, string RAZON_SOCIAL, string NOMBRE_PUESTO, string AREA, DateTime FECHA_VACANTE, string INFO_VACANTE, string MOTIVO_VACANTE, string DEDICACION_ESP, string CANT_HS, string HORA_DE, string HORA_HASTA, string HORA_DE_Y, string HORA_HASTA_Y, string DIA_DE, string DIA_HASTA, string TURNO, string DEBE_VIAJAR, string ZONAS, string DEBE_CONDUCIR, string MOV_PROPIA, string CONT_PUESTO_TRABAJO, string RESPONSABILIDADES, string FUNCIONES, string RELACION, string EDAD_MINIMA, string EDAD_MAXIMA, string GENERO, string ESTADO_CIVIL, string FORMACION, string ESTADO_FORMACION, string TITULO, string EXPERIENCIA, string TIEMPO, string id_usuario, string COD_CONV, string COD_CATEGORIA,bool INTERNO, string COD_CLIENTE, string COD_OBJETIVO)
+    {
+        try
+        {
+
+
+            string sql = "INSERT INTO [RRHH_SOLICITUD_RECLUTAMIENTO] (FECHA_SOLICITUD,RAZON_SOCIAL,NOMBRE_PUESTO,AREA,FECHA_VACANTE,INFO_VACANTE,MOTIVO_VACANTE,DEDICACION_ESP,CANT_HS,HORA_DE,HORA_HASTA,HORA_DE_Y,HORA_HASTA_Y,DIA_DE,DIA_HASTA,TURNO,DEBE_VIAJAR,ZONAS,DEBE_CONDUCIR,MOV_PROPIA, CONT_PUESTO_TRABAJO,RESPONSABILIDADES,FUNCIONES, RELACION,EDAD_MINIMA,EDAD_MAXIMA,GENERO,ESTADO_CIVIL,FORMACION,ESTADO_FORMACION,TITULO,EXPERIENCIA,TIEMPO,USUARIO,COD_CONV, COD_CATEGORIA,INTERNO, COD_CLIENTE, COD_OBJETIVO)";
+            sql += " VALUES ('" + FECHA_SOLICITUD.ToString("yyyyMMdd") + "','" + RAZON_SOCIAL + "','" + NOMBRE_PUESTO + "','" + AREA + "','" + FECHA_VACANTE.ToString("yyyyMMdd") + "','" + INFO_VACANTE + "','" + MOTIVO_VACANTE + "','" + DEDICACION_ESP + "','" + CANT_HS + "','" + HORA_DE + "','" + HORA_HASTA + "','" + HORA_DE_Y + "','" + HORA_HASTA_Y + "','" + DIA_DE + "','" + DIA_HASTA + "','" + TURNO + "','" + DEBE_VIAJAR + "','" + ZONAS + "','" + DEBE_CONDUCIR + "','" + MOV_PROPIA + "','" + CONT_PUESTO_TRABAJO + "','" + RESPONSABILIDADES + "','" + FUNCIONES + "','" + RELACION + "','" + EDAD_MINIMA + "','" + EDAD_MAXIMA + "','" + GENERO + "','" + ESTADO_CIVIL + "','" + FORMACION + "','" + ESTADO_FORMACION + "','" + TITULO + "','" + EXPERIENCIA + "','" + TIEMPO + "','" + id_usuario + "','" + COD_CONV + "','" + COD_CATEGORIA + "'," + ((INTERNO) ? 1 : 0) + ",'" + COD_CLIENTE + "','" + COD_OBJETIVO + "')";
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Alta_SOLICITUD_RECLUTAMIENTO(DateTime FECHA_SOLICITUD,string RAZON_SOCIAL, string NOMBRE_PUESTO,string AREA,DateTime FECHA_VACANTE, string INFO_VACANTE, string MOTIVO_VACANTE, string DEDICACION_ESP, string CANT_HS, string HORA_DE, string HORA_HASTA, string HORA_DE_Y, string HORA_HASTA_Y, string DIA_DE, string DIA_HASTA, string TURNO, string DEBE_VIAJAR, string ZONAS, string DEBE_CONDUCIR, string MOV_PROPIA, string CONT_PUESTO_TRABAJO, string RESPONSABILIDADES, string FUNCIONES, string RELACION, string EDAD_MINIMA, string EDAD_MAXIMA, string EDAD_ENTRE, string EDAD_Y, string GENERO, string ESTADO_CIVIL, string FORMACION, string ESTADO_FORMACION, string TITULO,string EXPERIENCIA, string TIEMPO)");
+        }
+
+    }
+    public static void Editar_SOLICITUD_RECLUTAMIENTO(string id, DateTime FECHA_SOLICITUD, string RAZON_SOCIAL, string NOMBRE_PUESTO, string AREA, DateTime FECHA_VACANTE, string INFO_VACANTE, string MOTIVO_VACANTE, string DEDICACION_ESP, string CANT_HS, string HORA_DE, string HORA_HASTA, string HORA_DE_Y, string HORA_HASTA_Y, string DIA_DE, string DIA_HASTA, string TURNO, string DEBE_VIAJAR, string ZONAS, string DEBE_CONDUCIR, string MOV_PROPIA, string CONT_PUESTO_TRABAJO, string RESPONSABILIDADES, string FUNCIONES, string RELACION, string EDAD_MINIMA, string EDAD_MAXIMA, string GENERO, string ESTADO_CIVIL, string FORMACION, string ESTADO_FORMACION, string TITULO, string EXPERIENCIA, string TIEMPO, string id_usuario, string COD_CONV, string COD_CATEGORIA, bool INTERNO, string COD_CLIENTE, string COD_OBJETIVO)
+    {
+        try
+        {
+            string sql = "UPDATE [RRHH_SOLICITUD_RECLUTAMIENTO] ";
+            sql += " SET FECHA_SOLICITUD='" + FECHA_SOLICITUD.ToString("yyyyMMdd") + "'";
+            sql += " ,RAZON_SOCIAL='" + RAZON_SOCIAL + "'";
+            sql += " ,NOMBRE_PUESTO='" + NOMBRE_PUESTO + "'";
+            sql += " ,AREA='" + AREA + "'";
+            sql += " ,FECHA_VACANTE='" + FECHA_VACANTE.ToString("yyyyMMdd") + "'";
+            sql += " ,INFO_VACANTE='" + INFO_VACANTE + "'";
+            sql += " ,MOTIVO_VACANTE='" + MOTIVO_VACANTE + "'";
+            sql += " ,DEDICACION_ESP='" + DEDICACION_ESP + "'";
+            sql += " ,CANT_HS='" + CANT_HS + "'";
+            sql += " ,HORA_DE='" + HORA_DE + "'";
+            sql += " ,HORA_HASTA='" + HORA_HASTA + "'";
+            sql += " ,HORA_DE_Y='" + HORA_DE_Y + "'";
+            sql += " ,HORA_HASTA_Y='" + HORA_HASTA_Y + "'";
+            sql += " ,DIA_DE='" + DIA_DE + "'";
+            sql += " ,DIA_HASTA='" + DIA_HASTA + "'";
+            sql += " ,TURNO='" + TURNO + "'";
+            sql += " ,DEBE_VIAJAR='" + DEBE_VIAJAR + "'";
+            sql += " ,ZONAS='" + ZONAS + "'";
+            sql += " ,DEBE_CONDUCIR='" + DEBE_CONDUCIR + "'";
+            sql += " ,MOV_PROPIA='" + MOV_PROPIA + "'";
+            sql += " ,CONT_PUESTO_TRABAJO='" + CONT_PUESTO_TRABAJO + "'";
+            sql += " ,RESPONSABILIDADES='" + RESPONSABILIDADES + "'";
+            sql += " ,FUNCIONES='" + FUNCIONES + "'";
+            sql += " ,RELACION='" + RELACION + "'";
+            sql += " ,EDAD_MINIMA='" + EDAD_MINIMA + "'";
+            sql += " ,EDAD_MAXIMA='" + EDAD_MAXIMA + "'";
+            sql += " ,GENERO='" + GENERO + "'";
+            sql += " ,ESTADO_CIVIL='" + ESTADO_CIVIL + "'";
+            sql += " ,FORMACION='" + FORMACION + "'";
+            sql += " ,ESTADO_FORMACION='" + ESTADO_FORMACION + "'";
+            sql += " ,TITULO='" + TITULO + "'";
+            sql += " ,EXPERIENCIA='" + EXPERIENCIA + "'";
+            sql += " ,TIEMPO='" + TIEMPO + "'";
+            sql += " ,COD_CONV='" + COD_CONV + "'";
+            sql += " ,COD_CLIENTE='" + COD_CLIENTE + "'";
+            sql += " ,COD_CATEGORIA='" + COD_CATEGORIA + "'";
+            sql += " ,COD_OBJETIVO='" + COD_OBJETIVO + "'";
+            sql += " ,INTERNO=" + ((INTERNO) ? 1 : 0);
+            sql += " WHERE id=" + id;
+
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Editar_SOLICITUD_RECLUTAMIENTO(string id,DateTime FECHA_ALTA, DateTime FECHA_BAJA, string CUIL, string APELLIDO, string NOMBRES, string DOMICILIO_REAL, string COD_OS, string COD_CONV, string REMUNERACION_NETA, string COD_CENTRO_COSTO, string COD_OBJETIVO, string TAREAS, string USUARIO, string COD_CLIENTE, bool INTERNO, string ID_RECLUTAMIENTO, string RAZON_SOCIAL)");
+        }
+
+    }
+    public static void Eliminar_SOLICITUD_RECLUTAMIENTO(string id)
+    {
+        try
+        {
+            string sql = "DELETE FROM [RRHH_SOLICITUD_RECLUTAMIENTO] ";
+            sql += " WHERE id=" + id;
+
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Eliminar_SOLICITUD_RECLUTAMIENTO(string id)");
+        }
+
+    }
+
+    public static void Alta_DOCUMENTACION_CCT_ENVIOS(string ID_DOC_CCT, string ARCHIVO, string OBSERVACIONES, DateTime FECHA, string ID_INGRESO)
+    {
+        try
+        {
+
+
+            string sql = "INSERT INTO [RRHH_DOCUMENTACION_CCT_ENVIOS] (ID_DOC_CCT,ARCHIVO,OBSERVACIONES,FECHA,ID_INGRESO)";
+            sql += " VALUES ('" + ID_DOC_CCT + "','" + ARCHIVO + "','" + OBSERVACIONES + "','" + FECHA.ToString("yyyyMMdd") + "','" + ID_INGRESO + "')";
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Alta_DOCUMENTACION_CCT_ENVIOS(string ID_DOC_CCT, string ARCHIVO, string OBSERVACIONES, DateTime FECHA)");
+        }
+
+    }
+    public static void Eliminar_DOCUMENTACION_CCT_ENVIOS(string ID)
+    {
+        try
+        {
+
+
+            string sql = "DELETE FROM RRHH_DOCUMENTACION_CCT_ENVIOS ";
+            sql += " WHERE ID=" + ID;
+            
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Alta_DOCUMENTACION_CCT_ENVIOS(string ID_DOC_CCT, string ARCHIVO, string OBSERVACIONES, DateTime FECHA)");
+        }
+
+    }
+    
+
+    public static void Editar_Estado_SOLICITUD_INGRESO(string id, bool pendiente, string observaciones)
+    {
+        try
+        {
+
+
+            string sql = "UPDATE [RRHH_SOLICITUD_INGRESO] ";
+            sql += " SET pendiente=" + ((pendiente)? "1":"0");
+            sql += " ,observaciones='" + observaciones +"'";
+            sql += " WHERE id=" + id;
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Editar_Estado_SOLICITUD_INGRESO(string id, bool pendiente)");
+        }
+
+    }
+
+    public static void Editar_obs_SOLICITUD_INGRESO(string id,string observaciones)
+    {
+        try
+        {
+
+
+            string sql = "UPDATE [RRHH_SOLICITUD_INGRESO] ";
+            sql += " SET observaciones='" + observaciones + "'";
+            sql += " WHERE id=" + id;
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Editar_Estado_SOLICITUD_INGRESO(string id, bool pendiente)");
+        }
+
+    }
+
+    public static void Alta_obs_DOC_ENVIO(string ID_DOC_CCT, string ID_INGRESO, string OBSERVACION)
+    {
+        try
+        {
+
+            string sql = "INSERT INTO [RRHH_DOCUMENTACION_OBS] (ID_DOC_CCT,ID_INGRESO,OBSERVACION)";
+            sql += " VALUES ('" + ID_DOC_CCT + "','" + ID_INGRESO + "','" + OBSERVACION + "')";
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Alta_obs_DOC_ENVIO(string ID_DOC_CCT, string ID_INGRESO, string OBSERVACIONES)");
+        }
+
+    }
+
+    public static void Alta_RESERVA_SALA(string LUGAR, DateTime FECHA, string HORA, string USUARIO)
+    {
+        try
+        {
+
+
+            string sql = "INSERT INTO [RESERVA_SALA] (LUGAR, FECHA,HORA,USUARIO)";
+            sql += " VALUES ('" + LUGAR + "','" + FECHA.ToString("yyyyMMdd") + "','" + HORA + "','" + USUARIO + "')";
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Costos Inidrectos ");
+        }
+
+    }
+    public static void Eliminar_RESERVA_SALA(string LUGAR, DateTime FECHA, string HORA, string USUARIO)
+    {
+        try
+        {
+
+
+            string sql = "DELETE FROM RESERVA_SALA ";
+            sql += " WHERE LUGAR='" + LUGAR + "'";
+            sql += " and  FECHA='" + FECHA.ToString("yyyyMMdd") + "'";
+            sql += " and  HORA='" + HORA + "'";
+            sql += " and  USUARIO='" + USUARIO + "'";
+
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Alta_DOCUMENTACION_CCT_ENVIOS(string ID_DOC_CCT, string ARCHIVO, string OBSERVACIONES, DateTime FECHA)");
+        }
+
+    }
+
+    #region CBS_cv
+
+    public static void Altacv(string RHMCUH_NROCUR, string RHMCUH_NOMBRE, string RHMCUH_DIRECC, string RHMCUH_CODPOS, string RHMCUH_TELEFN, string RHMCUH_NRODO2, DateTime RHMCUH_FCHNAC, string RHMCUH_CODSEX, string RHMCUH_BMPBMP, string USR_RHMCUH_RHEDAD, string USR_RHMCUH_RHEMAIL, string USR_RHMCUH_ARCHCV)
+    {
+        try
+        {
+            //string RHMCUH_NROCUR = EjecutarConsultaBD("LocalSqlServer", "select ID=ISNULL(MAX(RHMCUH_NROCUR),0)+1 from RHMCUH WITH(nolock)").Rows[0]["ID"].ToString();
+
+            string sql = "INSERT INTO [RHMCUH] ([RHMCUH_NROCUR],[RHMCUH_NOMBRE],[RHMCUH_DIRECC],[RHMCUH_DIPISO],[RHMCUH_CODPAI],[RHMCUH_CODPOS],[RHMCUH_TELEFN],[RHMCUH_NRODO1],[RHMCUH_TIPDO2],[RHMCUH_NRODO2],[RHMCUH_NRODO3],[RHMCUH_NRODO4],[RHMCUH_NRODO5],[RHMCUH_PAINAC],[RHMCUH_FCHNAC],[RHMCUH_DIPUER],[RHMCUH_DIDPTO],[RHMCUH_ESTCIV],[RHMCUH_CODNAC],[RHMCUH_CODSEX],[RHMCUH_VISTOS],[RHMCUH_PUNTAJ],[RHMCUH_BMPBMP],[RHMCUH_TEXTOS],[USR_RHMCUH_RHEDAD],[USR_RHMCUH_RHEMAIL],[RHMCUH_FECALT],[RHMCUH_FECMOD],[RHMCUH_USERID],[RHMCUH_ULTOPR],[RHMCUH_DEBAJA],[RHMCUH_OALIAS],[USR_RHMCUH_ARCHCV],[USR_RHMCUH_FCHCRG])";
+            sql += " VALUES ('" + RHMCUH_NROCUR + "','" + RHMCUH_NOMBRE + "','" + RHMCUH_DIRECC + "','','054','" + RHMCUH_CODPOS + "','" + RHMCUH_TELEFN + "','','96','" + RHMCUH_NRODO2 + "','','','','054','" + RHMCUH_FCHNAC.ToString("yyyyMMdd") + "','','','N','054','" + RHMCUH_CODSEX + "','N','0','" + RHMCUH_BMPBMP + "',''," + USR_RHMCUH_RHEDAD + ",'" + USR_RHMCUH_RHEMAIL + "',getdate(),getdate(),'ADMIN','M','N','RHMCUH','" + USR_RHMCUH_ARCHCV + "',getdate())";
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["CBS"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Altacv(string RHMCUH_NOMBRE, string RHMCUH_DIRECC, string RHMCUH_CODPOS, string RHMCUH_TELEFN, string RHMCUH_NRODO2, DateTime RHMCUH_FCHNAC,string RHMCUH_CODSEX, string RHMCUH_BMPBMP, string USR_RHMCUH_RHEDAD, string USR_RHMCUH_RHEMAIL)");
+        }
+
+    }
+
+    public static void Altacv_Items(string RHMCUI_NROCUR, string RHMCUI_CODIGO, string RHMCUI_CODITM, string USR_RHMCUI_OBSERV)
+    {
+        try
+        {
+
+
+            string sql = "INSERT INTO [RHMCUI] ([RHMCUI_NROCUR],[RHMCUI_CODIGO],[RHMCUI_CODITM],[USR_RHMCUI_OBSERV],[RHMCUI_FECALT],[RHMCUI_FECMOD],[RHMCUI_USERID],[RHMCUI_ULTOPR],[RHMCUI_DEBAJA],[RHMCUI_OALIAS])";
+            sql += " VALUES ('" + RHMCUI_NROCUR + "','" + RHMCUI_CODIGO + "','" + RHMCUI_CODITM + "','" + USR_RHMCUI_OBSERV + "',getdate(),getdate(),'ADMIN','M','N','RHMCUI')";
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["CBS"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Altacv_Items(string RHMCUI_NROCUR, string RHMCUI_CODIGO, string RHMCUI_CODITM, string USR_RHMCUI_OBSERV)");
+        }
+
+    }
+
+    #endregion
+
+
+    #endregion
+
+    #region FACTURACION
+    public static void Editar_envio_comp(string VTRMVH_CODEMP, string VTRMVH_NROCTA, string VTRMVH_CODFOR, string VTRMVH_NROFOR, string VTRMVH_NROCAE, string enviado)
+    {
+        try
+        {
+
+
+            string sql = "UPDATE [VTRMVH] ";
+            sql += " SET USR_VTRMVH_ENVMAI='" + ((enviado=="ENVIADO") ? "S" : "N") + "'";
+            sql += " WHERE VTRMVH_CODEMP='" + VTRMVH_CODEMP + "'";
+            sql += " and  VTRMVH_NROCTA='" + VTRMVH_NROCTA + "'";
+            sql += " and  VTRMVH_CODFOR='" + VTRMVH_CODFOR + "'";
+            sql += " and  VTRMVH_NROFOR='" + VTRMVH_NROFOR + "'";
+            sql += " and  VTRMVH_NROCAE='" + VTRMVH_NROCAE + "'";
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["CBS"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Editar_envio_comp(string VTRMVH_CODEMP, string VTRMVH_NROCTA, string VTRMVH_CODFOR, string VTRMVH_NROFOR, string VTRMVH_NROCAE, bool enviado)");
+        }
+
+    }
+    #endregion
+
+    #region SH
+    public static void Eliminar_NC(string id)
+    {
+        try
+        {
+
+
+            string sql = "DELETE FROM NO_CONFORMIDADES ";
+            sql += " WHERE id=" + id;
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Eliminar_NC(string id)");
+        }
+
+    }
+
+    public static void Editar_NC(string ID, string DESCRIPCION, string MEDIDA_INMEDIATA, string INVESTIGACION, bool CORRESPONDE_AC, string ACCION_INMEDIATA, DateTime PLAZO, string RESPONSABLE, string OBSERVACIONES, string USUARIO, string PUNTO_NORMA, string ID_ORIGEN, string ID_TIPO, string ID_SECTOR_INT)
+    {
+        try
+        {
+
+
+            string sql = "UPDATE NO_CONFORMIDADES SET ";
+            //sql += " DESCRIPCION='" + DESCRIPCION + "'";
+            //sql += " ,MEDIDA_INMEDIATA='" + MEDIDA_INMEDIATA + "'";
+            //sql += " ,INVESTIGACION='" + INVESTIGACION + "'";
+            //sql += " ,CORRESPONDE_AC=" + ((CORRESPONDE_AC)?1:0);
+            //sql += " ,ACCION_INMEDIATA='" + ACCION_INMEDIATA + "'";
+            //sql += " ,PLAZO='" + PLAZO.ToString("yyyyMMdd") + "'";
+            //sql += " ,RESPONSABLE='" + RESPONSABLE + "'";
+            sql += " OBSERVACIONES='" + OBSERVACIONES + "'";
+            //sql += " ,ID_SECTOR_INT='" + ID_SECTOR_INT + "'";
+            //sql += " ,CERRADO=" + ((CERRADO) ? 1 : 0);
+            //sql += " ,USUARIO='" + USUARIO + "'";
+            //sql += " ,PUNTO_NORMA='" + PUNTO_NORMA + "'";
+            //sql += " ,ID_ORIGEN='" + ID_ORIGEN+ "'";
+            //sql += " ,ID_TIPO='" + ID_TIPO + "'";
+            sql += " WHERE ID=" + ID;
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - EliminarCuentaUsuario(string usuario)");
+        }
+
+    }
+    public static void Agregar_NC(string ID_SECTOR, string DESCRIPCION, string MEDIDA_INMEDIATA, string INVESTIGACION, bool CORRESPONDE_AC, string ACCION_INMEDIATA, DateTime PLAZO, string RESPONSABLE, string OBSERVACIONES, string USUARIO, string PUNTO_NORMA, string ID_ORIGEN, string ID_TIPO, string ID_SECTOR_INT)
+    {
+        try
+        {
+
+
+            string sql = "INSERT INTO NO_CONFORMIDADES (FECHA, ID_SECTOR, DESCRIPCION, MEDIDA_INMEDIATA, INVESTIGACION, CORRESPONDE_AC, ACCION_INMEDIATA, PLAZO, RESPONSABLE, OBSERVACIONES, USUARIO, PUNTO_NORMA, ID_ORIGEN, ID_TIPO,ID_SECTOR_INT)";
+            sql += " VALUES (getdate(),'" + ID_SECTOR + "','" + DESCRIPCION + "','" + MEDIDA_INMEDIATA + "','" + INVESTIGACION + "'," + ((CORRESPONDE_AC) ? 1 : 0) + ",'" + ACCION_INMEDIATA + "','" + PLAZO.ToString("yyyyMMdd") + "','" + RESPONSABLE + "','" + OBSERVACIONES + "','" + USUARIO + "','" + PUNTO_NORMA + "','" + ID_ORIGEN + "','" + ID_TIPO + "','" + ID_SECTOR_INT + "')";
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - AgregarCuentaUsuario(string usuario, string perfilid)");
+        }
+
+    }
+    public static void Editar_NC_Seguimiento(string ID, string VERIFICACION_SEG, bool EFECTIVIDAD_SEG, DateTime CIERRE_SEG, string OBSERVACIONES_SEG)
+    {
+        try
+        {
+
+
+            string sql = "UPDATE NO_CONFORMIDADES SET ";
+            
+            sql += " VERIFICACION_SEG='" + VERIFICACION_SEG + "'";
+            sql += " ,EFECTIVIDAD_SEG=" + ((EFECTIVIDAD_SEG) ? 1 : 0);
+            sql += " ,CIERRE_SEG='" + CIERRE_SEG.ToString("yyyyMMdd") + "'";
+            sql += " ,OBSERVACIONES_SEG='" + OBSERVACIONES_SEG + "'";
+            sql += " WHERE ID=" + ID;
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - EliminarCuentaUsuario(string usuario)");
+        }
+
+    }
+    public static void EditarHallazgo_Archivo(string id, string archivo)
+    {
+        try
+        {
+            string sql = "UPDATE NO_CONFORMIDADES ";
+            sql += " SET archivo='" + archivo + "'";
+            sql += " WHERE id=" + id;
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " -EditarVisita_Archivo(string id, string archivo)");
+        }
+
+    }
+
+    public static void EditarHallazgo_Archivo_Seguimiento(string id, string ARCHIVO_SEG)
+    {
+        try
+        {
+            string sql = "UPDATE NO_CONFORMIDADES ";
+            sql += " SET ARCHIVO_SEG='" + ARCHIVO_SEG + "'";
+            sql += " WHERE id=" + id;
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " -EditarVisita_Archivo(string id, string archivo)");
+        }
+    }
+
+    #endregion
+    #region SISTEMAS
+    public static void Eliminar_EI(string id)
+    {
+        try
+        {
+
+
+            string sql = "DELETE FROM EQUIPOS_INFORMATICOS ";
+            sql += " WHERE id=" + id;
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Eliminar_EI(string id)");
+        }
+
+    }
+
+    public static void Editar_EI(string ID, string IDUSUARIO, string IP, string TIPO, string NOMBRE_EQUIPO, string DESCRIPCION, string USUARIO_SESION, string CONTRASEÑA_SESION, string RAM, string SISTEMA_OPERATIVO, string LICENCIA_SO, string ANTIVIRUS, string OFFICE, string LICENCIA_OFFICE, string IDTEAMVIEWER, string SWITCH, string BOCA)
+    {
+        try
+        {
+
+
+            string sql = "UPDATE EQUIPOS_INFORMATICOS SET ";
+            sql += " IDUSUARIO='" + IDUSUARIO + "'";
+            sql += " ,IP='" + IP + "'";
+            sql += " ,TIPO='" + TIPO + "'";
+            sql += " ,NOMBRE_EQUIPO='" + NOMBRE_EQUIPO + "'";
+            sql += " ,DESCRIPCION='" + DESCRIPCION + "'";
+            sql += " ,USUARIO_SESION='" + USUARIO_SESION + "'";
+            sql += " ,CONTRASEÑA_SESION='" + CONTRASEÑA_SESION + "'";
+            sql += " ,RAM='" + RAM + "'";
+            sql += " ,SISTEMA_OPERATIVO='" + SISTEMA_OPERATIVO + "'";
+            sql += " ,LICENCIA_SO='" + LICENCIA_SO + "'";
+            sql += " ,ANTIVIRUS='" + ANTIVIRUS + "'";
+            sql += " ,OFFICE='" + OFFICE + "'";
+            sql += " ,LICENCIA_OFFICE='" + LICENCIA_OFFICE + "'";
+            sql += " ,IDTEAMVIEWER='" + IDTEAMVIEWER + "'";
+            sql += " ,SWITCH='" + SWITCH + "'";
+            sql += " ,BOCA='" + BOCA + "'";
+            sql += " WHERE ID=" + ID;
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Editar_EI(string usuario)");
+        }
+
+    }
+    public static void Agregar_EI(string IDUSUARIO, string IP, string TIPO, string NOMBRE_EQUIPO, string DESCRIPCION, string USUARIO_SESION, string CONTRASEÑA_SESION, string RAM, string SISTEMA_OPERATIVO, string LICENCIA_SO, string ANTIVIRUS, string OFFICE, string LICENCIA_OFFICE, string IDTEAMVIEWER, string SWITCH, string BOCA)
+    {
+        try
+        {
+
+
+            string sql = "INSERT INTO EQUIPOS_INFORMATICOS (IDUSUARIO, IP, TIPO, NOMBRE_EQUIPO, DESCRIPCION, USUARIO_SESION, CONTRASEÑA_SESION, RAM,  SISTEMA_OPERATIVO,  LICENCIA_SO, ANTIVIRUS,  OFFICE,  LICENCIA_OFFICE,  IDTEAMVIEWER,  SWITCH,  BOCA)";
+            sql += " VALUES ('" + IDUSUARIO + "','" + IP + "','" + TIPO + "','" + NOMBRE_EQUIPO + "','" + DESCRIPCION + "','" + USUARIO_SESION + "','" + CONTRASEÑA_SESION + "','" + RAM + "','" + SISTEMA_OPERATIVO + "','" + LICENCIA_SO + "','" + ANTIVIRUS + "','" + OFFICE + "','" + LICENCIA_OFFICE + "','" + IDTEAMVIEWER + "','" + SWITCH + "','" + BOCA + "')";
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Agregar_EI(string usuario, string perfilid)");
+        }
+
+    }
+  
+    #endregion
+    #region COTIZACIONES
+    public static void Eliminar_SOLICITUD_COTIZACION(string id)
+    {
+        try
+        {
+
+
+            string sql = "DELETE FROM COT_SOLICITUD_COTIZACION ";
+            sql += " WHERE id=" + id;
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Eliminar_EI(string id)");
+        }
+
+    }
+    public static void Editar_SOLICITUD_COTIZACION(string ID, string EMPRESA, string IDSECTOR, string IDCLIENTE, string CONTACTO_NOMBRE, string CONTACTO_DOMICILO, string CONTACTO_TELEFONO, string CONTACTO_MAIL, string OBSERVACIONES, string USUARIO)
+    {
+        try
+        {
+
+
+            string sql = "UPDATE COT_SOLICITUD_COTIZACION SET ";
+            sql += " EMPRESA='" + EMPRESA + "'";
+            sql += " ,IDSECTOR='" + IDSECTOR + "'";
+            sql += " ,IDCLIENTE='" + IDCLIENTE + "'";
+            sql += " ,CONTACTO_NOMBRE='" + CONTACTO_NOMBRE + "'";
+            sql += " ,CONTACTO_DOMICILO='" + CONTACTO_DOMICILO + "'";
+            sql += " ,CONTACTO_TELEFONO='" + CONTACTO_TELEFONO + "'";
+            sql += " ,CONTACTO_MAIL='" + CONTACTO_MAIL + "'";
+            sql += " ,OBSERVACIONES='" + OBSERVACIONES + "'";
+            sql += " ,USUARIO='" + USUARIO + "'";
+          
+            sql += " WHERE ID=" + ID;
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Editar_EI(string usuario)");
+        }
+
+    }
+    public static void Alta_SOLICITUD_COTIZACION(string EMPRESA, string IDSECTOR, string IDCLIENTE, string CONTACTO_NOMBRE, string CONTACTO_DOMICILO, string CONTACTO_TELEFONO, string CONTACTO_MAIL, string OBSERVACIONES, string USUARIO)
+    {
+        try
+        {
+
+
+            string sql = "INSERT INTO COT_SOLICITUD_COTIZACION (EMPRESA,IDSECTOR,IDCLIENTE,CONTACTO_NOMBRE,CONTACTO_DOMICILO,CONTACTO_TELEFONO,CONTACTO_MAIL,OBSERVACIONES,USUARIO)";
+            sql += " VALUES ('" + EMPRESA + "','" + IDSECTOR + "','" + IDCLIENTE + "','" + CONTACTO_NOMBRE + "','" + CONTACTO_DOMICILO + "','" + CONTACTO_TELEFONO + "','" + CONTACTO_MAIL + "','" + OBSERVACIONES + "','" + USUARIO + "')";
+
+
+            DataTable dtMenuItems = new DataTable();
+            string strConnString = ConfigurationManager.ConnectionStrings["LocalSqlServer"].ConnectionString;
+            SqlCommand daMenu = new SqlCommand(sql);
+            daMenu.Connection = new SqlConnection(strConnString);
+            daMenu.Connection.Open();
+            daMenu.ExecuteNonQuery();
+            daMenu.Connection.Close();
+            daMenu.Dispose();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.Message + " - Agregar_EI(string usuario, string perfilid)");
+        }
+
+    }
+  
     #endregion
 
 }

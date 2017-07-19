@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="Página principal" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true"
     CodeFile="RRHH_TEL_INTERNOS.aspx.cs" Inherits="RRHH_TEL_INTERNOS" %>
-<%@ Register assembly="DevExpress.Web.v15.1, Version=15.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web" tagprefix="dx" %>
+
+<%@ Register Assembly="DevExpress.Web.v16.1, Version=16.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
+    Namespace="DevExpress.Web" TagPrefix="dx" %>
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
     <script type="text/javascript">
         function OnBatchEditEndEditing(s, e) {
@@ -52,10 +54,14 @@
                         </dx:GridViewCommandColumn>
                         <dx:GridViewDataColumn VisibleIndex="1" FieldName="INTERNO">
                         </dx:GridViewDataColumn>
-                        <dx:GridViewDataColumn VisibleIndex="2" FieldName="AREA">
+                        <dx:GridViewDataComboBoxColumn VisibleIndex="2" FieldName="INTEGRANTES" Caption="NOMBRE Y APELLIDO">
+                        </dx:GridViewDataComboBoxColumn>
+                        <dx:GridViewDataColumn VisibleIndex="3" FieldName="CORPORATIVO">
                         </dx:GridViewDataColumn>
-                        <dx:GridViewDataColumn VisibleIndex="3" FieldName="INTEGRANTES">
+                        <dx:GridViewDataColumn VisibleIndex="4" FieldName="POSICION">
                         </dx:GridViewDataColumn>
+                        <dx:GridViewDataComboBoxColumn VisibleIndex="5" FieldName="AREA">
+                        </dx:GridViewDataComboBoxColumn>
                     </Columns>
                 </dx:ASPxGridView>
             </td>

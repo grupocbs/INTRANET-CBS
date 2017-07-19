@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
 using DevExpress.Web;
 
 public partial class RRHH_TEL_INTERNOS : System.Web.UI.Page
@@ -12,7 +14,7 @@ public partial class RRHH_TEL_INTERNOS : System.Web.UI.Page
         if (Session["usuario"] == null)
         {
 
-            Response.Redirect("login.aspx");
+            Response.Redirect("INTRANET_LOGIN.aspx");
         }
         if (!IsPostBack)
         {
@@ -20,13 +22,11 @@ public partial class RRHH_TEL_INTERNOS : System.Web.UI.Page
             Recargar();
         }
     }
-
-
     private void Recargar()
     {
         try
         {
-            ASPxGridView1.DataSource = Interfaz.EjecutarConsultaBD("LocalSqlServer", "SELECT * FROM INTERNOS with(nolock) ORDER BY INTERNO  ");
+            ASPxGridView1.DataSource = Interfaz.EjecutarConsultaBD("LocalSqlServer", "SELECT * FROM INTERNOS with(nolock) ORDER BY AREA");
             ASPxGridView1.DataBind();
 
         }
@@ -56,14 +56,20 @@ public partial class RRHH_TEL_INTERNOS : System.Web.UI.Page
     {
         try
         {
-            //GridViewDataComboBoxColumn combo = ASPxGridView1.Columns["Perfil"] as GridViewDataComboBoxColumn;
+            GridViewDataComboBoxColumn combo2 = ASPxGridView1.Columns["AREA"] as GridViewDataComboBoxColumn;
 
+            foreach (DataRow dr in Interfaz.EjecutarConsultaBD("LocalSqlServer", "SELECT ID,DESCRIPCION FROM SECTORES WITH(NOLOCK)").Rows)
+            {
+                combo2.PropertiesComboBox.Items.Add(new ListEditItem(dr["DESCRIPCION"].ToString(), dr["ID"].ToString()));
 
-            //foreach (DataRow dr in Interfaz.CargarPerfiles("").Rows)
-            //{
-            //    combo.PropertiesComboBox.Items.Add(new ListEditItem(dr["descripcion"].ToString(), dr["perfilid"].ToString()));
+            }
+            GridViewDataComboBoxColumn combo3 = ASPxGridView1.Columns["INTEGRANTES"] as GridViewDataComboBoxColumn;
 
-            //}
+            foreach (DataRow dr in Interfaz.EjecutarConsultaBD("LocalSqlServer", "SELECT IDUSUARIO,USUARIO=USUARIO + ' ('+MAIL+')' FROM USUARIOS WITH(NOLOCK) order by USUARIO").Rows)
+            {
+                combo3.PropertiesComboBox.Items.Add(new ListEditItem(dr["USUARIO"].ToString(), dr["IDUSUARIO"].ToString()));
+
+            }
         }
         catch (Exception ex)
         {
@@ -78,7 +84,7 @@ public partial class RRHH_TEL_INTERNOS : System.Web.UI.Page
     {
         try
         {
-            Interfaz.AgregarInterno(e.NewValues["INTERNO"].ToString(), e.NewValues["AREA"].ToString(), e.NewValues["INTEGRANTES"].ToString());
+            Interfaz.AgregarInterno(e.NewValues["INTERNO"].ToString(), e.NewValues["AREA"].ToString(), e.NewValues["INTEGRANTES"].ToString(), e.NewValues["CORPORATIVO"].ToString(), e.NewValues["POSICION"].ToString());
             Recargar();
             e.Cancel = true;
             ASPxGridView1.CancelEdit();
@@ -95,7 +101,7 @@ public partial class RRHH_TEL_INTERNOS : System.Web.UI.Page
     {
         try
         {
-            Interfaz.EditarInterno(e.NewValues["INTERNO"].ToString(), e.NewValues["AREA"].ToString(), e.NewValues["INTEGRANTES"].ToString(), e.Keys[0].ToString());
+            Interfaz.EditarInterno(e.Keys[0].ToString(), e.NewValues["INTERNO"].ToString(), e.NewValues["AREA"].ToString(), e.NewValues["INTEGRANTES"].ToString(), e.NewValues["CORPORATIVO"].ToString(), e.NewValues["POSICION"].ToString());
 
             Recargar();
             e.Cancel = true;
@@ -138,7 +144,17 @@ public partial class RRHH_TEL_INTERNOS : System.Web.UI.Page
 
             if (e.NewValues["INTEGRANTES"] != null && e.NewValues["INTEGRANTES"].ToString().Length < 1)
             {
-                AddError(e.Errors, ASPxGridView1.Columns["INTEGRANTES"], "Cargue INTEGRANTES");
+                AddError(e.Errors, ASPxGridView1.Columns["INTEGRANTES"], "Cargue NOMBRE Y APELLIDO");
+            }
+
+            if (e.NewValues["CORPORATIVO"] != null && e.NewValues["CORPORATIVO"].ToString().Length < 1)
+            {
+                AddError(e.Errors, ASPxGridView1.Columns["CORPORATIVO"], "Cargue CORPORATIVO");
+            }
+
+            if (e.NewValues["POSICION"] != null && e.NewValues["POSICION"].ToString().Length < 1)
+            {
+                AddError(e.Errors, ASPxGridView1.Columns["POSICION"], "Cargue POSICION");
             }
             
 

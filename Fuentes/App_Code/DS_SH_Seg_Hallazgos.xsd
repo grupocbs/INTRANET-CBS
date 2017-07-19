@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DS_OP_parte_diario" targetNamespace="http://tempuri.org/DS_OP_parte_diario.xsd" xmlns:mstns="http://tempuri.org/DS_OP_parte_diario.xsd" xmlns="http://tempuri.org/DS_OP_parte_diario.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DS_OP_parte_diario" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DS_OP_parte_diario" msprop:Generator_UserDSName="DS_OP_parte_diario">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="NO_CONF" msprop:Generator_TableClassName="NO_CONFDataTable" msprop:Generator_TableVarName="tableNO_CONF" msprop:Generator_TablePropName="NO_CONF" msprop:Generator_RowDeletingName="NO_CONFRowDeleting" msprop:Generator_RowChangingName="NO_CONFRowChanging" msprop:Generator_RowEvHandlerName="NO_CONFRowChangeEventHandler" msprop:Generator_RowDeletedName="NO_CONFRowDeleted" msprop:Generator_UserTableName="NO_CONF" msprop:Generator_RowChangedName="NO_CONFRowChanged" msprop:Generator_RowEvArgName="NO_CONFRowChangeEvent" msprop:Generator_RowClassName="NO_CONFRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:string" minOccurs="0" />
+              <xs:element name="NRO" msprop:Generator_ColumnVarNameInTable="columnNRO" msprop:Generator_ColumnPropNameInRow="NRO" msprop:Generator_ColumnPropNameInTable="NROColumn" msprop:Generator_UserColumnName="NRO" type="xs:string" minOccurs="0" />
+              <xs:element name="FECHA" msprop:Generator_ColumnVarNameInTable="columnFECHA" msprop:Generator_ColumnPropNameInRow="FECHA" msprop:Generator_ColumnPropNameInTable="FECHAColumn" msprop:Generator_UserColumnName="FECHA" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="SECTOR" msprop:Generator_ColumnVarNameInTable="columnSECTOR" msprop:Generator_ColumnPropNameInRow="SECTOR" msprop:Generator_ColumnPropNameInTable="SECTORColumn" msprop:Generator_UserColumnName="SECTOR" type="xs:string" minOccurs="0" />
+              <xs:element name="DESCRIPCION" msprop:Generator_ColumnVarNameInTable="columnDESCRIPCION" msprop:Generator_ColumnPropNameInRow="DESCRIPCION" msprop:Generator_ColumnPropNameInTable="DESCRIPCIONColumn" msprop:Generator_UserColumnName="DESCRIPCION" type="xs:string" minOccurs="0" />
+              <xs:element name="MEDIDA_INMEDIATA" msprop:Generator_ColumnVarNameInTable="columnMEDIDA_INMEDIATA" msprop:Generator_ColumnPropNameInRow="MEDIDA_INMEDIATA" msprop:Generator_ColumnPropNameInTable="MEDIDA_INMEDIATAColumn" msprop:Generator_UserColumnName="MEDIDA_INMEDIATA" type="xs:string" minOccurs="0" />
+              <xs:element name="INVESTIGACION" msprop:Generator_ColumnVarNameInTable="columnINVESTIGACION" msprop:Generator_ColumnPropNameInRow="INVESTIGACION" msprop:Generator_ColumnPropNameInTable="INVESTIGACIONColumn" msprop:Generator_UserColumnName="INVESTIGACION" type="xs:string" minOccurs="0" />
+              <xs:element name="CORRESPONDE_AC" msprop:Generator_ColumnVarNameInTable="columnCORRESPONDE_AC" msprop:Generator_ColumnPropNameInRow="CORRESPONDE_AC" msprop:Generator_ColumnPropNameInTable="CORRESPONDE_ACColumn" msprop:Generator_UserColumnName="CORRESPONDE_AC" type="xs:string" minOccurs="0" />
+              <xs:element name="ACCION_INMEDIATA" msprop:Generator_ColumnVarNameInTable="columnACCION_INMEDIATA" msprop:Generator_ColumnPropNameInRow="ACCION_INMEDIATA" msprop:Generator_ColumnPropNameInTable="ACCION_INMEDIATAColumn" msprop:Generator_UserColumnName="ACCION_INMEDIATA" type="xs:string" minOccurs="0" />
+              <xs:element name="PLAZO" msprop:Generator_ColumnVarNameInTable="columnPLAZO" msprop:Generator_ColumnPropNameInRow="PLAZO" msprop:Generator_ColumnPropNameInTable="PLAZOColumn" msprop:Generator_UserColumnName="PLAZO" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="RESP" msprop:Generator_ColumnVarNameInTable="columnRESP" msprop:Generator_ColumnPropNameInRow="RESP" msprop:Generator_ColumnPropNameInTable="RESPColumn" msprop:Generator_UserColumnName="RESP" type="xs:string" minOccurs="0" />
+              <xs:element name="OBSERVACIONES" msprop:Generator_ColumnVarNameInTable="columnOBSERVACIONES" msprop:Generator_ColumnPropNameInRow="OBSERVACIONES" msprop:Generator_ColumnPropNameInTable="OBSERVACIONESColumn" msprop:Generator_UserColumnName="OBSERVACIONES" type="xs:string" minOccurs="0" />
+              <xs:element name="PUNTO_NORMA" msprop:Generator_ColumnVarNameInTable="columnPUNTO_NORMA" msprop:Generator_ColumnPropNameInRow="PUNTO_NORMA" msprop:Generator_ColumnPropNameInTable="PUNTO_NORMAColumn" msprop:Generator_UserColumnName="PUNTO_NORMA" type="xs:string" minOccurs="0" />
+              <xs:element name="ORIGEN" msprop:Generator_ColumnVarNameInTable="columnORIGEN" msprop:Generator_ColumnPropNameInRow="ORIGEN" msprop:Generator_ColumnPropNameInTable="ORIGENColumn" msprop:Generator_UserColumnName="ORIGEN" type="xs:string" minOccurs="0" />
+              <xs:element name="TIPO" msprop:Generator_ColumnVarNameInTable="columnTIPO" msprop:Generator_ColumnPropNameInRow="TIPO" msprop:Generator_ColumnPropNameInTable="TIPOColumn" msprop:Generator_UserColumnName="TIPO" type="xs:string" minOccurs="0" />
+              <xs:element name="SECTOR_IN" msprop:Generator_ColumnVarNameInTable="columnSECTOR_IN" msprop:Generator_ColumnPropNameInRow="SECTOR_IN" msprop:Generator_ColumnPropNameInTable="SECTOR_INColumn" msprop:Generator_UserColumnName="SECTOR_IN" type="xs:string" minOccurs="0" />
+              <xs:element name="VERIFICA" msprop:Generator_ColumnVarNameInTable="columnVERIFICA" msprop:Generator_ColumnPropNameInRow="VERIFICA" msprop:Generator_ColumnPropNameInTable="VERIFICAColumn" msprop:Generator_UserColumnName="VERIFICA" type="xs:string" minOccurs="0" />
+              <xs:element name="EFECTIVIDAD_SEG" msprop:Generator_ColumnVarNameInTable="columnEFECTIVIDAD_SEG" msprop:Generator_ColumnPropNameInRow="EFECTIVIDAD_SEG" msprop:Generator_ColumnPropNameInTable="EFECTIVIDAD_SEGColumn" msprop:Generator_UserColumnName="EFECTIVIDAD_SEG" type="xs:string" minOccurs="0" />
+              <xs:element name="CIERRE_SEG" msprop:Generator_ColumnVarNameInTable="columnCIERRE_SEG" msprop:Generator_ColumnPropNameInRow="CIERRE_SEG" msprop:Generator_ColumnPropNameInTable="CIERRE_SEGColumn" msprop:Generator_UserColumnName="CIERRE_SEG" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="OBSERVACIONES_SEG" msprop:Generator_ColumnVarNameInTable="columnOBSERVACIONES_SEG" msprop:Generator_ColumnPropNameInRow="OBSERVACIONES_SEG" msprop:Generator_ColumnPropNameInTable="OBSERVACIONES_SEGColumn" msprop:Generator_UserColumnName="OBSERVACIONES_SEG" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
